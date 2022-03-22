@@ -1,0 +1,12 @@
+`define 	OP_ADD  			12'b000000000001
+`define 	OP_SUB  			12'b000000000010
+`define 	OP_SLT  			12'b000000000100
+`define 	OP_SLTU 			12'b000000001000
+`define 	OP_AND  			12'b000000010000
+`define 	OP_OR   			12'b000000100000
+`define 	OP_XOR  			12'b000001000000
+`define 	OP_SLL  			12'b000010000000
+`define 	OP_SRL  			12'b000100000000
+`define 	OP_SRA  			12'b001000000000
+`define 	OP_LUI  			12'b010000000000
+`define 	OP_JAL  			12'b100000000000
