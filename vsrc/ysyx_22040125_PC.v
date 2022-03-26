@@ -1,7 +1,7 @@
 module ysyx_22040125_PC (
-        input  wire         clk,
-        input  wire         rst,
         input  wire[63:0]   cpu_dnpc,
+        input  wire         clk,
+        input  wire         rst, 
         output reg[63:0]    cpu_pc        
     );
 

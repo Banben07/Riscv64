@@ -1,18 +1,17 @@
 `include "/home/sakamoto/ysyx-workbench/npc/vsrc/ysyx_22040125_config.v"
 module ysyx_22040125_IDU (
         input  wire[31:0]   inst,
+        output wire[63:0]   imm,
         output wire[11:0]   op,
         output wire[4:0]    rd,
         output wire[4:0]    rs1,
         output wire[4:0]    rs2,
-        output wire[63:0]   imm,
+        output wire[2:0]    pc_sel,
         output wire[1:0]    src1_sel,
         output wire[1:0]    src2_sel,
-        output wire[1:0]    pc_sel,
+        output wire[1:0]    load_sel,
         output wire         data_wen,
-        output wire         data_ren,
-        output wire         reg_wen,
-        output wire[1:0]    load_sel
+        output wire         reg_wen  
     );
 
     wire          TYPE_I, TYPE_U, TYPE_S, TYPE_J, TYPE_B, TYPE_R;// else = R
@@ -22,7 +21,7 @@ module ysyx_22040125_IDU (
 
     assign opcode = inst[6:0];
     assign rd     = inst[11:7];
-    assign rs1    = inst[19:15];
+    assign rs1    = (inst == 32'h00100073)? 5'h0a: inst[19:15];
     assign rs2    = inst[24:20];
     assign funct3 = inst[14:12];
     assign funct7 = inst[31:25];
@@ -42,28 +41,29 @@ module ysyx_22040125_IDU (
 
     assign imm = TYPE_I? immI: TYPE_U? immU: TYPE_S? immS: TYPE_J? immJ: TYPE_B? immB: 64'b0;
 
-    assign op = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000000)? `OP_ADD :
-                (opcode == 7'b0010011 && funct3 == 3'b000)?                         `OP_ADD : 
-                (opcode == 7'b0000011 && funct3 == 3'b010)?                         `OP_ADD : //LW
-                (opcode == 7'b0100011 && funct3 == 3'b010)?                         `OP_ADD : //SW
-                (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0100000)? `OP_SUB :
-                (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000000)? `OP_SLL :
-                (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000000)? `OP_SLT :
-                (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000000)? `OP_SLTU :
-                (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000000)? `OP_XOR :
-                (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000000)? `OP_SRL :
-                (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0100000)? `OP_SRA :
-                (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000000)? `OP_OR :
-                (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000000)? `OP_AND :
-                (opcode == 7'b0110111)?                                             `OP_LUI :
-                (opcode == 7'b1101111)?                                             `OP_JAL : 0; //JAL
+    assign op = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000000)? `OP_ADD  :    //ADD
+                (opcode == 7'b0010011 && funct3 == 3'b000)?                         `OP_ADD  :    //ADDI
+                (opcode == 7'b0000011 && funct3 == 3'b011)?                         `OP_ADD  :    //LD
+                (opcode == 7'b0100011 && funct3 == 3'b011)?                         `OP_ADD  :    //SD
+                (opcode == 7'b0010111)?                                             `OP_ADD  :    //AUIPC
+                (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0100000)? `OP_SUB  :    //SUB
+                (opcode == 7'b0110011 && funct3 == 3'b001 && funct7 == 7'b0000000)? `OP_SLL  :    //SUL
+                (opcode == 7'b0110011 && funct3 == 3'b010 && funct7 == 7'b0000000)? `OP_SLT  :    //SLT
+                (opcode == 7'b0110011 && funct3 == 3'b011 && funct7 == 7'b0000000)? `OP_SLTU :    //SLTU
+                (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000000)? `OP_XOR  :    //XOR
+                (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0000000)? `OP_SRL  :    //SRL
+                (opcode == 7'b0110011 && funct3 == 3'b101 && funct7 == 7'b0100000)? `OP_SRA  :    //SRA
+                (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000000)? `OP_OR   :    //OR
+                (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000000)? `OP_AND  :    //AND
+                (opcode == 7'b0110111)?                                             `OP_LUI  :    //LUI
+                (opcode == 7'b1101111)?                                             `OP_JAL  :    //JAL
+                (opcode == 7'b1100111 && funct3 == 3'b000)?                         `OP_JAL  : 0; //JALR                    
 
-    assign src1_sel = TYPE_J? 2'b01: 2'b10;
+    assign src1_sel = (TYPE_J | (opcode == 7'b0010111))? 2'b01: 2'b10;
     assign src2_sel = (TYPE_J | TYPE_U | TYPE_I | TYPE_S)? 2'b01: 2'b10;
-    assign pc_sel = TYPE_J? 2'b10: 2'b01;
+    assign pc_sel   = (opcode == 7'b1100111 && funct3 == 3'b000)? 3'b100: TYPE_J? 3'b010: 3'b001;
     assign data_wen = (opcode == 7'b0100011 && funct3 == 3'b010)? 1: 0;
-    assign data_ren = (opcode == 7'b0000011 && funct3 == 3'b010)? 1: 0;
-    assign reg_wen = (TYPE_R | TYPE_I | TYPE_U | TYPE_J)? 1: 0;
+    assign reg_wen  = (TYPE_R | TYPE_I | TYPE_U | TYPE_J)? 1: 0;
     assign load_sel = (opcode == 7'b0000011 && funct3 == 3'b010)? 2'b10: 2'b01;
 
 endmodule //ysyx_22040125_IDU
