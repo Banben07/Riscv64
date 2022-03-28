@@ -1,9 +1,9 @@
 // Verilated -*- C++ -*-
 // DESCRIPTION: Verilator output: Design implementation internals
-// See Vtop.h for the primary calling header
+// See Vsing_top.h for the primary calling header
 
-#include "Vtop___024root.h"
-#include "Vtop__Syms.h"
+#include "Vsing_top___024root.h"
+#include "Vsing_top__Syms.h"
 
 #include "verilated_dpi.h"
 
@@ -11,8 +11,8 @@
 
 extern "C" void set_gpr_ptr(const svOpenArrayHandle a);
 
-VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP(const VlUnpacked<QData/*63:0*/, 32> &a) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP\n"); );
+VL_INLINE_OPT void Vsing_top___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP(const VlUnpacked<QData/*63:0*/, 32> &a) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsing_top___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP\n"); );
     // Body
     static const int a__Vopenprops__ulims[2] = {31, 0};
     static const VerilatedVarProps a__Vopenprops(VLVT_UINT64, VLVD_IN, VerilatedVarProps::Packed(), 63, 0, VerilatedVarProps::Unpacked(), 1, a__Vopenprops__ulims);
@@ -22,8 +22,8 @@ VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_g
 
 extern "C" void set_ram_ptr(const svOpenArrayHandle a);
 
-VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__data_ram__DOT__set_ram_ptr__Vdpioc2_TOP(const VlUnpacked<QData/*63:0*/, 2> &a) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__data_ram__DOT__set_ram_ptr__Vdpioc2_TOP\n"); );
+VL_INLINE_OPT void Vsing_top___024root____Vdpiimwrap_top__DOT__data_ram__DOT__set_ram_ptr__Vdpioc2_TOP(const VlUnpacked<QData/*63:0*/, 2> &a) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsing_top___024root____Vdpiimwrap_top__DOT__data_ram__DOT__set_ram_ptr__Vdpioc2_TOP\n"); );
     // Body
     static const int a__Vopenprops__ulims[2] = {-1, 0};
     static const VerilatedVarProps a__Vopenprops(VLVT_UINT64, VLVD_IN, VerilatedVarProps::Packed(), 63, 0, VerilatedVarProps::Unpacked(), 1, a__Vopenprops__ulims);
@@ -31,10 +31,10 @@ VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__data_ram__DOT__set_ram
     set_ram_ptr(&a__Vopenarray);
 }
 
-VL_INLINE_OPT void Vtop___024root___sequent__TOP__1(Vtop___024root* vlSelf) {
+VL_INLINE_OPT void Vsing_top___024root___sequent__TOP__1(Vsing_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___sequent__TOP__1\n"); );
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsing_top___024root___sequent__TOP__1\n"); );
     // Variables
     CData/*4:0*/ __Vdlyvdim0__top__DOT__common_reg__DOT__reg_com__v0;
     CData/*0:0*/ __Vdlyvset__top__DOT__common_reg__DOT__reg_com__v0;
@@ -56,18 +56,18 @@ VL_INLINE_OPT void Vtop___024root___sequent__TOP__1(Vtop___024root* vlSelf) {
                                   ? 0ULL : vlSelf->top__DOT__common_reg__DOT__reg_com
                                  [vlSelf->top__DOT__rs1]))))) {
         VL_WRITEF("\033[1;32mHIT GOOD TRAP\033[0m\n");
-        VL_FINISH_MT("vsrc/top.v", 197, "");
+        VL_FINISH_MT("vsrc/top.v", 198, "");
     } else if (VL_UNLIKELY(((0x100073U == vlSelf->top__DOT__inst) 
                             & (0ULL != ((0U == (IData)(vlSelf->top__DOT__rs1))
                                          ? 0ULL : vlSelf->top__DOT__common_reg__DOT__reg_com
                                         [vlSelf->top__DOT__rs1]))))) {
         VL_WRITEF("\033[1;31mHIT BAD TRAP\033[0m\n");
-        VL_FINISH_MT("vsrc/top.v", 200, "");
+        VL_FINISH_MT("vsrc/top.v", 201, "");
     } else if (VL_UNLIKELY(((0x80000000ULL <= vlSelf->top__DOT__cpu_pc) 
                             & (0U == (IData)(vlSelf->top__DOT__op))))) {
         VL_WRITEF("\033[1;31mPaused at: PC=0x%x\033[0m\n\033[1;31mFAIL! Please add instructions!\033[0m\n",
                   32,(IData)(vlSelf->top__DOT__id_reg_pc));
-        VL_FINISH_MT("vsrc/top.v", 203, "");
+        VL_FINISH_MT("vsrc/top.v", 204, "");
     } else if (VL_UNLIKELY(((0x80000004ULL <= vlSelf->top__DOT__cpu_pc) 
                             & (0U != (IData)(vlSelf->top__DOT__op))))) {
         VL_WRITEF("\033[1;32mPC=0x%x\033[0m\n",32,(IData)(vlSelf->top__DOT__id_reg_pc));
@@ -641,33 +641,33 @@ VL_INLINE_OPT void Vtop___024root___sequent__TOP__1(Vtop___024root* vlSelf) {
                                        : vlSelf->top__DOT__mem_reg_cpu_dnpc_in2));
 }
 
-void Vtop___024root___eval(Vtop___024root* vlSelf) {
+void Vsing_top___024root___eval(Vsing_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval\n"); );
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsing_top___024root___eval\n"); );
     // Body
     if (((IData)(vlSelf->clk) & (~ (IData)(vlSelf->__Vclklast__TOP__clk)))) {
-        Vtop___024root___sequent__TOP__1(vlSelf);
+        Vsing_top___024root___sequent__TOP__1(vlSelf);
         vlSelf->__Vm_traceActivity[1U] = 1U;
     }
     // Final
     vlSelf->__Vclklast__TOP__clk = vlSelf->clk;
 }
 
-QData Vtop___024root___change_request_1(Vtop___024root* vlSelf);
+QData Vsing_top___024root___change_request_1(Vsing_top___024root* vlSelf);
 
-VL_INLINE_OPT QData Vtop___024root___change_request(Vtop___024root* vlSelf) {
+VL_INLINE_OPT QData Vsing_top___024root___change_request(Vsing_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___change_request\n"); );
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsing_top___024root___change_request\n"); );
     // Body
-    return (Vtop___024root___change_request_1(vlSelf));
+    return (Vsing_top___024root___change_request_1(vlSelf));
 }
 
-VL_INLINE_OPT QData Vtop___024root___change_request_1(Vtop___024root* vlSelf) {
+VL_INLINE_OPT QData Vsing_top___024root___change_request_1(Vsing_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___change_request_1\n"); );
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsing_top___024root___change_request_1\n"); );
     // Body
     // Change detection
     QData __req = false;  // Logically a bool
@@ -675,10 +675,10 @@ VL_INLINE_OPT QData Vtop___024root___change_request_1(Vtop___024root* vlSelf) {
 }
 
 #ifdef VL_DEBUG
-void Vtop___024root___eval_debug_assertions(Vtop___024root* vlSelf) {
+void Vsing_top___024root___eval_debug_assertions(Vsing_top___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_debug_assertions\n"); );
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vsing_top___024root___eval_debug_assertions\n"); );
     // Body
     if (VL_UNLIKELY((vlSelf->clk & 0xfeU))) {
         Verilated::overWidthError("clk");}

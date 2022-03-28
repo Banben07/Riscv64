@@ -7,7 +7,6 @@
 #include <common.h>
 
 const int sim_time = 9999;
-
 VerilatedContext* contextp = new VerilatedContext;
 Vtop* top = new Vtop{contextp};
 VerilatedVcdC* tfp = new VerilatedVcdC;
@@ -18,6 +17,7 @@ void run_time(int n)
   if (n < 0)
   {
     while (!Verilated::gotFinish() && main_time < sim_time) {
+      top->rst = 1;
       top->clk = !top->clk;    
       top->eval();
       contextp->timeInc(1);
@@ -27,6 +27,7 @@ void run_time(int n)
   } else
   {
     while (!Verilated::gotFinish() && main_time < 2*n) {
+      top->rst = 1;
       top->clk = !top->clk;    
       top->eval();
       contextp->timeInc(1);
@@ -51,10 +52,10 @@ int main(int argc, char* argv[]) {
       top->clk = !top->clk;
       top->rst = 0;
       top->eval();
+      contextp->timeInc(1);
+      tfp->dump(contextp->time());
       a++;
     }
-    top->rst = 1;
-    top->eval();
     sdb_mainloop();
     delete top;
     tfp->close();

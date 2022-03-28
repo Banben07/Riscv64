@@ -1,23 +1,23 @@
 // Verilated -*- C++ -*-
 // DESCRIPTION: Verilator output: Tracing implementation internals
 #include "verilated_vcd_c.h"
-#include "Vtop__Syms.h"
+#include "Vsing_top__Syms.h"
 
 
-void Vtop___024root__traceInitSub0(Vtop___024root* vlSelf, VerilatedVcd* tracep) VL_ATTR_COLD;
+void Vsing_top___024root__traceInitSub0(Vsing_top___024root* vlSelf, VerilatedVcd* tracep) VL_ATTR_COLD;
 
-void Vtop___024root__traceInitTop(Vtop___024root* vlSelf, VerilatedVcd* tracep) {
+void Vsing_top___024root__traceInitTop(Vsing_top___024root* vlSelf, VerilatedVcd* tracep) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     // Body
     {
-        Vtop___024root__traceInitSub0(vlSelf, tracep);
+        Vsing_top___024root__traceInitSub0(vlSelf, tracep);
     }
 }
 
-void Vtop___024root__traceInitSub0(Vtop___024root* vlSelf, VerilatedVcd* tracep) {
+void Vsing_top___024root__traceInitSub0(Vsing_top___024root* vlSelf, VerilatedVcd* tracep) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     const int c = vlSymsp->__Vm_baseCode;
     if (false && tracep && c) {}  // Prevent unused
     // Body
@@ -99,6 +99,7 @@ void Vtop___024root__traceInitSub0(Vtop___024root* vlSelf, VerilatedVcd* tracep)
         tracep->declBus(c+18,"top pc_sel_choice key", false,-1, 2,0);
         tracep->declQuad(c+63,"top pc_sel_choice out", false,-1, 63,0);
         tracep->declQuad(c+63,"top pc cpu_dnpc", false,-1, 63,0);
+        tracep->declBus(c+16,"top pc sel", false,-1, 2,0);
         tracep->declBit(c+204,"top pc clk", false,-1);
         tracep->declBit(c+205,"top pc rst", false,-1);
         tracep->declQuad(c+55,"top pc cpu_pc", false,-1, 63,0);
@@ -273,35 +274,35 @@ void Vtop___024root__traceInitSub0(Vtop___024root* vlSelf, VerilatedVcd* tracep)
     }
 }
 
-void Vtop___024root__traceFullTop0(void* voidSelf, VerilatedVcd* tracep) VL_ATTR_COLD;
-void Vtop___024root__traceChgTop0(void* voidSelf, VerilatedVcd* tracep);
-void Vtop___024root__traceCleanup(void* voidSelf, VerilatedVcd* /*unused*/);
+void Vsing_top___024root__traceFullTop0(void* voidSelf, VerilatedVcd* tracep) VL_ATTR_COLD;
+void Vsing_top___024root__traceChgTop0(void* voidSelf, VerilatedVcd* tracep);
+void Vsing_top___024root__traceCleanup(void* voidSelf, VerilatedVcd* /*unused*/);
 
-void Vtop___024root__traceRegister(Vtop___024root* vlSelf, VerilatedVcd* tracep) {
+void Vsing_top___024root__traceRegister(Vsing_top___024root* vlSelf, VerilatedVcd* tracep) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     // Body
     {
-        tracep->addFullCb(&Vtop___024root__traceFullTop0, vlSelf);
-        tracep->addChgCb(&Vtop___024root__traceChgTop0, vlSelf);
-        tracep->addCleanupCb(&Vtop___024root__traceCleanup, vlSelf);
+        tracep->addFullCb(&Vsing_top___024root__traceFullTop0, vlSelf);
+        tracep->addChgCb(&Vsing_top___024root__traceChgTop0, vlSelf);
+        tracep->addCleanupCb(&Vsing_top___024root__traceCleanup, vlSelf);
     }
 }
 
-void Vtop___024root__traceFullSub0(Vtop___024root* vlSelf, VerilatedVcd* tracep) VL_ATTR_COLD;
+void Vsing_top___024root__traceFullSub0(Vsing_top___024root* vlSelf, VerilatedVcd* tracep) VL_ATTR_COLD;
 
-void Vtop___024root__traceFullTop0(void* voidSelf, VerilatedVcd* tracep) {
-    Vtop___024root* const __restrict vlSelf = static_cast<Vtop___024root*>(voidSelf);
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+void Vsing_top___024root__traceFullTop0(void* voidSelf, VerilatedVcd* tracep) {
+    Vsing_top___024root* const __restrict vlSelf = static_cast<Vsing_top___024root*>(voidSelf);
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     // Body
     {
-        Vtop___024root__traceFullSub0((&vlSymsp->TOP), tracep);
+        Vsing_top___024root__traceFullSub0((&vlSymsp->TOP), tracep);
     }
 }
 
-void Vtop___024root__traceFullSub0(Vtop___024root* vlSelf, VerilatedVcd* tracep) {
+void Vsing_top___024root__traceFullSub0(Vsing_top___024root* vlSelf, VerilatedVcd* tracep) {
     if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    Vsing_top__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VlWide<3>/*95:0*/ __Vtemp18;
     VlWide<3>/*95:0*/ __Vtemp19;
     VlWide<3>/*95:0*/ __Vtemp20;

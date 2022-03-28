@@ -8,9 +8,9 @@ module ysyx_22040125_PC (
     always @(posedge clk) begin
         if (!rst) begin
             cpu_pc <= 64'h080000000;
-        end
-        else
+        end else begin
             cpu_pc <= cpu_dnpc;
+        end
     end
 
 endmodule //pc

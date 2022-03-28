@@ -8,10 +8,11 @@
 
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 static char buffer[2048];
+static char *g;
 
 char *readline(char *prompt) {
   fputs(prompt, stdout);
-  fgets(buffer, 2048, stdin);
+  g = fgets(buffer, 2048, stdin);
   char *cpy = (char*)malloc(strlen(buffer ) + 1);
   strcpy(cpy, buffer);
   cpy[strlen(cpy) - 1] = '\0';
