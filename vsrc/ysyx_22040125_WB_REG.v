@@ -19,7 +19,7 @@ module ysyx_22040125_WB_REG (
 
     always @(posedge clk) begin
         if (!rst) begin
-            wb_reg_out0  <= 64'h80000000;
+            wb_reg_out0  <= 0;
             wb_reg_out1  <= 3'b001;
             wb_reg_out2  <= 0;
             wb_reg_out3  <= 0;

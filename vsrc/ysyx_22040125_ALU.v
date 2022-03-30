@@ -2,8 +2,6 @@ module ysyx_22040125_ALU (
         input  wire[63:0]     src1,
         input  wire[63:0]     src2,
         input  wire[11:0]     op,
-        output wire[63:0]     cpu_dnpc_in1,
-        output wire[63:0]     cpu_dnpc_in2,
         output wire[63:0]     data_rd,
         output wire[31:0]     ram_raddr
     );
@@ -36,8 +34,6 @@ module ysyx_22040125_ALU (
 
     assign add_sub_result = data_result;
     assign ram_raddr = add_sub_result[31:0];
-    assign cpu_dnpc_in1 = add_sub_result;
-    assign cpu_dnpc_in2 = cpu_dnpc_in1 & (~1);
     assign slt_result = {63'b0, (src1[63] & ~src2[63]) | (~(src1[63] ^ src2[63]) & data_result[63])} ;
     assign sltu_result = {63'b0, ~data_cout};
     assign and_result = src1 & src2;

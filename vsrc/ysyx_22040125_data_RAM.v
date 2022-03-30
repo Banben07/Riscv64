@@ -2,6 +2,7 @@ module ysyx_22040125_data_RAM (
         input  wire[63:0]  wdata,
         input  wire[31:0]  ram_addr,
         input  wire        data_wen,
+        input  wire        data_ren,
         input  wire        clk,
         output reg[63:0]  rdata
     );
@@ -12,9 +13,11 @@ module ysyx_22040125_data_RAM (
 
     always @(posedge clk) begin
         if (data_wen) begin
-            ram[ram_addr] <= wdata;
+            ram[ram_addr] = wdata;
         end
-        rdata <= ram[ram_addr];
+        if (data_ren) begin
+            rdata = ram[ram_addr];
+        end
     end
 
 endmodule //ysyx_22040125_data_RAM

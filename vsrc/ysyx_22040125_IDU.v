@@ -11,6 +11,8 @@ module ysyx_22040125_IDU (
         output wire[1:0]    src2_sel,
         output wire[1:0]    load_sel,
         output wire         data_wen,
+        output wire         data_ren,
+        output wire         ebreak,
         output wire         reg_wen  
     );
 
@@ -57,13 +59,15 @@ module ysyx_22040125_IDU (
                 (opcode == 7'b0110011 && funct3 == 3'b111 && funct7 == 7'b0000000)? `OP_AND  :    //AND
                 (opcode == 7'b0110111)?                                             `OP_LUI  :    //LUI
                 (opcode == 7'b1101111)?                                             `OP_JAL  :    //JAL
-                (opcode == 7'b1100111 && funct3 == 3'b000)?                         `OP_JAL  : 0; //JALR                    
+                (opcode == 7'b1100111 && funct3 == 3'b000)?                         `OP_JAL  :0;  //JALR                
 
     assign src1_sel = (TYPE_J | (opcode == 7'b0010111))? 2'b01: 2'b10;
     assign src2_sel = (TYPE_J | TYPE_U | TYPE_I | TYPE_S)? 2'b01: 2'b10;
     assign pc_sel   = (opcode == 7'b1100111 && funct3 == 3'b000)? 3'b100: TYPE_J? 3'b010: 3'b001;
     assign data_wen = (opcode == 7'b0100011 && funct3 == 3'b010)? 1: 0;
+    assign data_ren = (opcode == 7'b0000011 && funct3 == 3'b011)? 1: 0;
     assign reg_wen  = (TYPE_R | TYPE_I | TYPE_U | TYPE_J)? 1: 0;
     assign load_sel = (opcode == 7'b0000011 && funct3 == 3'b010)? 2'b10: 2'b01;
-
+    assign ebreak = (inst == 32'h00100073);
+    
 endmodule //ysyx_22040125_IDU
