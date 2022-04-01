@@ -2,17 +2,19 @@ module ysyx_22040125_inst_RAM (
         input  wire         clk,
         input  wire[63:0]   cpu_pc,
         input  wire         rst,
-        input  wire[15:0]   addr,
 
         output reg[31:0]   inst,
         output reg[63:0]   if_pc
     );
 
-    reg [31:0] rom[65535:0];
+    wire[15:0]   addr;
+    reg [31:0]   rom[65535:0];
 
     initial begin
-        $readmemh("/home/sakamoto/ysyx-workbench/npc/mem/rom_inst_file.txt", rom);
+        $readmemh("/home/sakamoto/ysyx-workbench/npc/mem/program.hex", rom);
     end
+
+    assign addr = {(cpu_pc-64'h80000000)/(64'd4)}[15:0];
 
     always @(posedge clk) begin
         if (!rst) begin

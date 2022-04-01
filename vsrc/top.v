@@ -6,17 +6,19 @@ module top (
 
     wire         data_wen, data_wen_out, reg_wen_out, stall_control, data_ren, exe_reg_data_ren, mem_reg_data_ren, IF_Flush, ebreak, ebreak_out, reg_wen, mem_reg_reg_wen,mem_reg_data_wen,exe_reg_data_wen, exe_reg_reg_wen, wb_reg_reg_wen;
     wire[1:0]    src1_sel, wb_reg_load_sel, mem_reg_load_sel, exe_reg_src1_sel, src2_sel, exe_reg_src2_sel, load_sel, exe_reg_load_sel;
-    wire[2:0]    pc_sel, pc_add_rs1_sel, src1_sel_plus, src2_sel_plus, wb_reg_pc_sel, mem_reg_pc_sel, exe_reg_pc_sel, wb_reg_pc_sel;
-    wire[4:0]    rs1, rs2, exe_reg_rs1, exe_reg_rs2, rd, mem_reg_rd,exe_reg_rd, exe_reg_rs1, exe_reg_rs2, wb_reg_rd;
+    wire[2:0]    pc_sel, mem_reg_s_bhwd, s_bhwd, exe_reg_s_bhwd, pc_sel_out, src1_sel_plus, src2_sel_plus, wb_reg_pc_sel, mem_reg_pc_sel, exe_reg_pc_sel;
+    wire[3:0]    pc_add_rs1_sel;
+    wire[4:0]    rs1, rs2, exe_reg_rs1, exe_reg_rs2, rd, mem_reg_rd,exe_reg_rd, wb_reg_rd;
+    wire[5:0]    b_check, l_bhw, exe_reg_l_bhw, mem_reg_l_bhw;
     wire[11:0]   op, op_out, exe_reg_op;
     wire[15:0]   inst_addr;
     wire[31:0]   inst, ram_addr, mem_reg_ram_addr, inst_id, inst_out;
-    wire[63:0]   imm, pc_src1, data_a0, one_src1, one_src2, if_pc, exe_reg_src1_rs1, exe_reg_src1, exe_reg_src2, exe_reg_src2_rs2, mem_reg_pc, wb_reg_rdata, wb_reg_data_rd_in, mem_reg_src2_rs2, mem_reg_data_rd_in, mem_reg_cpu_dnpc_in1, mem_reg_cpu_dnpc_in2,exe_reg_imm, cpu_pc, wb_reg_pc, wb_reg_cpu_dnpc_in1, wb_reg_cpu_dnpc_in2, exe_reg_pc, cpu_ifpc, if_reg_pc, id_reg_pc, cpu_dnpc, cpu_snpc, rdata, src1_rs1, src2_rs2, cpu_dnpc_in1, cpu_dnpc_in2, src1, src2, data_rd_in;
+    wire[63:0]   imm, src2_out, pc_src1, data_a0, one_src1, one_src2, if_pc, exe_reg_src1_rs1, exe_reg_src1, exe_reg_src2, exe_reg_src2_rs2, mem_reg_pc, wb_reg_rdata, wb_reg_data_rd_in, mem_reg_src2_rs2, mem_reg_data_rd_in, mem_reg_cpu_dnpc_in1, mem_reg_cpu_dnpc_in2,exe_reg_imm, cpu_pc, wb_reg_pc, wb_reg_cpu_dnpc_in1, wb_reg_cpu_dnpc_in2, exe_reg_pc, cpu_ifpc, if_reg_pc, id_reg_pc, cpu_dnpc, cpu_snpc, rdata, src1_rs1, src2_rs2, cpu_dnpc_in1, cpu_dnpc_in2, src1, src2, data_rd_in;
 
     assign cpu_snpc = cpu_pc + 64'd4;
 
     ysyx_22040125_Hazard_unit Hazard_unit(
-                            .pc_jump(pc_sel),
+                            .pc_jump(pc_sel_out),
                             .rs1(rs1),
                             .rs2(rs2),
                             .exe_reg_rd(exe_reg_rd),
@@ -29,8 +31,10 @@ module top (
                             .exe_reg_rs1(exe_reg_rs1),
                             .exe_reg_rs2(exe_reg_rs2),
                             .pc_rs1(rs1),
+                            .exe_reg_rd(exe_reg_rd),
                             .mem_reg_rd(mem_reg_rd),
                             .wb_reg_rd(wb_reg_rd),
+                            .exe_reg_reg_wen(exe_reg_reg_wen),
                             .mem_reg_reg_wen(mem_reg_reg_wen),
                             .wb_reg_reg_wen(wb_reg_reg_wen),
                             .src1_sel_plus(src1_sel_plus),
@@ -42,7 +46,7 @@ module top (
                             .in0(cpu_snpc),
                             .in1(cpu_dnpc_in1),
                             .in2(cpu_dnpc_in2),
-                            .key(pc_sel),
+                            .key(pc_sel_out),
                             .out(cpu_dnpc)
                         );
 
@@ -54,14 +58,8 @@ module top (
                          .cpu_pc(cpu_pc)
                         );
 
-    ysyx_22040125_INF inf(
-                            .pc(cpu_pc),
-                            .addr(inst_addr)
-                        );
-
     ysyx_22040125_inst_RAM inst_ram(
                             .cpu_pc(cpu_pc),
-                            .addr(inst_addr),
                             .rst(rst),
                             .clk(clk),
                             .inst(inst),
@@ -92,8 +90,19 @@ module top (
                             .data_wen(data_wen),
                             .data_ren(data_ren),
                             .reg_wen(reg_wen),
+                            .l_bhw(l_bhw),
+                            .s_bhwd(s_bhwd),
                             .load_sel(load_sel),
-                            .ebreak(ebreak)
+                            .ebreak(ebreak),
+                            .b_check(b_check)
+                        );
+    
+    ysyx_22040125_B_CHECK b_check_out(
+                            .b_check(b_check),
+                            .pc_sel(pc_sel),
+                            .rs1_data(src1_rs1),
+                            .rs2_data(src2_rs2),
+                            .pc_sel_out(pc_sel_out)
                         );
                         
     ysyx_22040125_control_stall control_stall(
@@ -116,10 +125,11 @@ module top (
                             .data_rs2(src2_rs2)
                         );
     
-    ysyx_22040125_MUX31 pc_add_choice(
+    ysyx_22040125_MUX41 pc_add_src1_choice(
                             .in0(src1_rs1),
-                            .in1(mem_reg_data_rd_in),
-                            .in2(wb_reg_data_rd_in),
+                            .in1(data_rd_in),
+                            .in2(mem_reg_data_rd_in),
+                            .in3(wb_reg_data_rd_in),
                             .key(pc_add_rs1_sel),
                             .out(pc_src1)
                         );
@@ -149,6 +159,8 @@ module top (
                             .exe_reg_in12(rs1),
                             .exe_reg_in13(rs2),
                             .exe_reg_in14(data_ren),
+                            .exe_reg_in15(s_bhwd),
+                            .exe_reg_in16(l_bhw),
                             .exe_reg_out0(exe_reg_pc),
                             .exe_reg_out1(exe_reg_op),
                             .exe_reg_out2(exe_reg_rd),
@@ -162,7 +174,9 @@ module top (
                             .exe_reg_out11(exe_reg_imm),
                             .exe_reg_out12(exe_reg_rs1),
                             .exe_reg_out13(exe_reg_rs2),
-                            .exe_reg_out14(exe_reg_data_ren)
+                            .exe_reg_out14(exe_reg_data_ren),
+                            .exe_reg_out15(exe_reg_s_bhwd),
+                            .exe_reg_out16(exe_reg_l_bhw)
                         );
 
     ysyx_22040125_MUX21 src1_sel_choice(
@@ -196,11 +210,15 @@ module top (
                         );
 
     ysyx_22040125_ALU  alu(
+                           .s_check(exe_reg_data_wen),
+                           .imm(exe_reg_imm),
                            .src1(src1),
                            .src2(src2),
                            .op(exe_reg_op),
+                           .s_bhwd(exe_reg_s_bhwd),
                            .data_rd(data_rd_in),
-                           .ram_raddr(ram_addr)
+                           .ram_raddr(ram_addr),
+                           .src2_out(src2_out)
                        );
 
     ysyx_22040125_MEM_REG mem_reg(
@@ -213,9 +231,11 @@ module top (
                               .mem_reg_in4(exe_reg_load_sel),
                               .mem_reg_in7(data_rd_in),
                               .mem_reg_in8(ram_addr),
-                              .mem_reg_in9(exe_reg_src2),
+                              .mem_reg_in9(src2_out),
                               .mem_reg_in10(exe_reg_pc),
                               .mem_reg_in11(exe_reg_data_ren),
+                              .mem_reg_in12(exe_reg_s_bhwd),
+                              .mem_reg_in13(exe_reg_l_bhw),
                               .mem_reg_out0(mem_reg_rd),
                               .mem_reg_out1(mem_reg_pc_sel),
                               .mem_reg_out2(mem_reg_data_wen),
@@ -225,12 +245,16 @@ module top (
                               .mem_reg_out8(mem_reg_ram_addr),
                               .mem_reg_out9(mem_reg_src2_rs2),
                               .mem_reg_out10(mem_reg_pc),
-                              .mem_reg_out11(mem_reg_data_ren)
+                              .mem_reg_out11(mem_reg_data_ren),
+                              .mem_reg_out12(mem_reg_s_bhwd),
+                              .mem_reg_out13(mem_reg_l_bhw)
                           );
 
     ysyx_22040125_data_RAM data_ram(
                                .ram_addr(mem_reg_ram_addr),
                                .wdata(mem_reg_src2_rs2),
+                               .s_bhwd(mem_reg_s_bhwd),
+                               .l_bhw(mem_reg_l_bhw),
                                .data_wen(mem_reg_data_wen),
                                .data_ren(mem_reg_data_ren),
                                .clk(clk),
@@ -285,12 +309,12 @@ module top (
         end
         else if (inst_out != 32'hffffffff) begin
             if((cpu_pc >= 64'h80000010) && (op_out == 0)) begin
-                $display("\033[1;31mPaused at: PC=0x%x\033[0m\n\033[1;31mFAIL! Please add instructions!\033[0m", id_reg_pc[31:0]);
+                $display("\033[1;31mPaused at: PC=0x%x\033[0m\n\033[1;31mFAIL! Please add instructions!\033[0m", mem_reg_pc[31:0]);
                 $finish;
             end
         end
         if ((cpu_pc >= 64'h80000004) && (inst_id != 32'hffffffff)) begin
-            $display("\033[1;32mPC=0x%x\033[0m", id_reg_pc[31:0]);
+            $display("\033[1;32mPC=0x%x\033[0m", mem_reg_pc[31:0]);
         end
     end
 
