@@ -14,6 +14,7 @@ Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , clk{vlSymsp->TOP.clk}
     , rst{vlSymsp->TOP.rst}
     , data_rd{vlSymsp->TOP.data_rd}
+    , outdata{vlSymsp->TOP.outdata}
     , rootp{&(vlSymsp->TOP)}
 {
 }

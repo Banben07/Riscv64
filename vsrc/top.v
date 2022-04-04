@@ -1,19 +1,20 @@
 module top (
         input  wire       clk,
         input  wire       rst,
-        output wire[63:0] data_rd
+        output wire[63:0] data_rd,
+        output wire[63:0] outdata
     );
 
-    wire         data_wen, data_wen_out, reg_wen_out, stall_control, data_ren, exe_reg_data_ren, mem_reg_data_ren, IF_Flush, ebreak, ebreak_out, reg_wen, mem_reg_reg_wen,mem_reg_data_wen,exe_reg_data_wen, exe_reg_reg_wen, wb_reg_reg_wen;
+    wire         w_check, exe_reg_w_check, data_wen, data_wen_out, reg_wen_out, stall_control, data_ren, exe_reg_data_ren, mem_reg_data_ren, IF_Flush, ebreak, ebreak_out, reg_wen, mem_reg_reg_wen,mem_reg_data_wen,exe_reg_data_wen, exe_reg_reg_wen, wb_reg_reg_wen;
     wire[1:0]    src1_sel, wb_reg_load_sel, mem_reg_load_sel, exe_reg_src1_sel, src2_sel, exe_reg_src2_sel, load_sel, exe_reg_load_sel;
     wire[2:0]    pc_sel, mem_reg_s_bhwd, s_bhwd, exe_reg_s_bhwd, pc_sel_out, src1_sel_plus, src2_sel_plus, wb_reg_pc_sel, mem_reg_pc_sel, exe_reg_pc_sel;
-    wire[3:0]    pc_add_rs1_sel;
+    wire[3:0]    pc_add_rs1_sel, b_check_rs2_sel;
     wire[4:0]    rs1, rs2, exe_reg_rs1, exe_reg_rs2, rd, mem_reg_rd,exe_reg_rd, wb_reg_rd;
     wire[5:0]    b_check, l_bhw, exe_reg_l_bhw, mem_reg_l_bhw;
     wire[11:0]   op, op_out, exe_reg_op;
     wire[15:0]   inst_addr;
     wire[31:0]   inst, ram_addr, mem_reg_ram_addr, inst_id, inst_out;
-    wire[63:0]   imm, src2_out, pc_src1, data_a0, one_src1, one_src2, if_pc, exe_reg_src1_rs1, exe_reg_src1, exe_reg_src2, exe_reg_src2_rs2, mem_reg_pc, wb_reg_rdata, wb_reg_data_rd_in, mem_reg_src2_rs2, mem_reg_data_rd_in, mem_reg_cpu_dnpc_in1, mem_reg_cpu_dnpc_in2,exe_reg_imm, cpu_pc, wb_reg_pc, wb_reg_cpu_dnpc_in1, wb_reg_cpu_dnpc_in2, exe_reg_pc, cpu_ifpc, if_reg_pc, id_reg_pc, cpu_dnpc, cpu_snpc, rdata, src1_rs1, src2_rs2, cpu_dnpc_in1, cpu_dnpc_in2, src1, src2, data_rd_in;
+    wire[63:0]   imm, b_src2, src2_out, pc_src1, data_a0, one_src1, one_src2, if_pc, exe_reg_src1_rs1, exe_reg_src1, exe_reg_src2, exe_reg_src2_rs2, mem_reg_pc, wb_reg_rdata, wb_reg_data_rd_in, mem_reg_src2_rs2, mem_reg_data_rd_in, mem_reg_cpu_dnpc_in1, mem_reg_cpu_dnpc_in2,exe_reg_imm, cpu_pc, wb_reg_pc, wb_reg_cpu_dnpc_in1, wb_reg_cpu_dnpc_in2, exe_reg_pc, cpu_ifpc, if_reg_pc, id_reg_pc, cpu_dnpc, cpu_snpc, rdata, src1_rs1, src2_rs2, cpu_dnpc_in1, cpu_dnpc_in2, src1, src2, data_rd_in;
 
     assign cpu_snpc = cpu_pc + 64'd4;
 
@@ -31,6 +32,9 @@ module top (
                             .exe_reg_rs1(exe_reg_rs1),
                             .exe_reg_rs2(exe_reg_rs2),
                             .pc_rs1(rs1),
+                            .b_rs2(rs2),
+                            .rs1_sel(exe_reg_src1_sel),
+                            .rs2_sel(exe_reg_src2_sel),
                             .exe_reg_rd(exe_reg_rd),
                             .mem_reg_rd(mem_reg_rd),
                             .wb_reg_rd(wb_reg_rd),
@@ -39,7 +43,8 @@ module top (
                             .wb_reg_reg_wen(wb_reg_reg_wen),
                             .src1_sel_plus(src1_sel_plus),
                             .src2_sel_plus(src2_sel_plus),
-                            .pc_add_rs1_sel(pc_add_rs1_sel)
+                            .pc_add_rs1_sel(pc_add_rs1_sel),
+                            .b_check_rs2_sel(b_check_rs2_sel)
                         );
 
     ysyx_22040125_MUX31 pc_sel_choice(
@@ -94,15 +99,8 @@ module top (
                             .s_bhwd(s_bhwd),
                             .load_sel(load_sel),
                             .ebreak(ebreak),
-                            .b_check(b_check)
-                        );
-    
-    ysyx_22040125_B_CHECK b_check_out(
                             .b_check(b_check),
-                            .pc_sel(pc_sel),
-                            .rs1_data(src1_rs1),
-                            .rs2_data(src2_rs2),
-                            .pc_sel_out(pc_sel_out)
+                            .w_check(w_check)
                         );
                         
     ysyx_22040125_control_stall control_stall(
@@ -129,9 +127,18 @@ module top (
                             .in0(src1_rs1),
                             .in1(data_rd_in),
                             .in2(mem_reg_data_rd_in),
-                            .in3(wb_reg_data_rd_in),
+                            .in3(data_rd),
                             .key(pc_add_rs1_sel),
                             .out(pc_src1)
+                        );
+
+    ysyx_22040125_MUX41 b_check_rs2_choice(
+                            .in0(src2_rs2),
+                            .in1(data_rd_in),
+                            .in2(mem_reg_data_rd_in),
+                            .in3(data_rd),
+                            .key(b_check_rs2_sel),
+                            .out(b_src2)
                         );
 
     ysyx_22040125_PC_ADD pc_add(
@@ -140,6 +147,14 @@ module top (
                             .imm_in(imm),
                             .cpu_dnpc_in1(cpu_dnpc_in1),
                             .cpu_dnpc_in2(cpu_dnpc_in2)
+                        );
+    
+    ysyx_22040125_B_CHECK b_check_out(
+                            .b_check(b_check),
+                            .pc_sel(pc_sel),
+                            .rs1_data(pc_src1),
+                            .rs2_data(b_src2),
+                            .pc_sel_out(pc_sel_out)
                         );
 
     ysyx_22040125_EXE_REG exe_reg(
@@ -161,6 +176,7 @@ module top (
                             .exe_reg_in14(data_ren),
                             .exe_reg_in15(s_bhwd),
                             .exe_reg_in16(l_bhw),
+                            .exe_reg_in17(w_check),
                             .exe_reg_out0(exe_reg_pc),
                             .exe_reg_out1(exe_reg_op),
                             .exe_reg_out2(exe_reg_rd),
@@ -176,7 +192,8 @@ module top (
                             .exe_reg_out13(exe_reg_rs2),
                             .exe_reg_out14(exe_reg_data_ren),
                             .exe_reg_out15(exe_reg_s_bhwd),
-                            .exe_reg_out16(exe_reg_l_bhw)
+                            .exe_reg_out16(exe_reg_l_bhw),
+                            .exe_reg_out17(exe_reg_w_check)
                         );
 
     ysyx_22040125_MUX21 src1_sel_choice(
@@ -196,7 +213,7 @@ module top (
     ysyx_22040125_MUX31 src1_sel_choice_out(
                             .in0(one_src1),
                             .in1(mem_reg_data_rd_in),
-                            .in2(wb_reg_data_rd_in),
+                            .in2(data_rd),
                             .key(src1_sel_plus),
                             .out(src1)
                         );
@@ -204,7 +221,7 @@ module top (
     ysyx_22040125_MUX31 src2_sel_choice_out(
                             .in0(one_src2),
                             .in1(mem_reg_data_rd_in),
-                            .in2(wb_reg_data_rd_in),
+                            .in2(data_rd),
                             .key(src2_sel_plus),
                             .out(src2)
                         );
@@ -215,6 +232,7 @@ module top (
                            .src1(src1),
                            .src2(src2),
                            .op(exe_reg_op),
+                           .w_check(exe_reg_w_check),
                            .s_bhwd(exe_reg_s_bhwd),
                            .data_rd(data_rd_in),
                            .ram_raddr(ram_addr),
@@ -258,6 +276,7 @@ module top (
                                .data_wen(mem_reg_data_wen),
                                .data_ren(mem_reg_data_ren),
                                .clk(clk),
+                               .outdata(outdata),
                                .rdata(rdata)
                            );
 
@@ -299,11 +318,11 @@ module top (
                         );
 
     always @(posedge clk) begin
-        if ((ebreak_out == 1) && (data_a0 == 64'b0)) begin
+        if ((ebreak_out == 1) && (data_a0 == 64'hc0ffee)) begin
             $display("\033[1;32mHIT GOOD TRAP\033[0m");
             $finish;
         end
-        else if((ebreak_out == 1) && (data_a0 != 64'b0)) begin
+        else if((ebreak_out == 1) && (data_a0 != 64'hc0ffee)) begin
             $display("\033[1;31mHIT BAD TRAP\033[0m");
             $finish;
         end

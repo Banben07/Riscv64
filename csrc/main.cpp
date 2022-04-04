@@ -6,7 +6,7 @@
 #include "verilated_dpi.h"
 #include <common.h>
 
-const int sim_time = 1024;
+const int sim_time = 10240;
 VerilatedContext* contextp = new VerilatedContext;
 Vtop* top = new Vtop{contextp};
 VerilatedVcdC* tfp = new VerilatedVcdC;
@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
       a++;
     }
     sdb_mainloop();
+    // run_time(-1);
     delete top;
     tfp->close();
     delete contextp;

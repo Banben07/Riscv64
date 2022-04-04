@@ -18,14 +18,14 @@ assign data_cin = 1'b1;
 assign {data_cout, data_result} = data_a + data_b + data_cin;
     /* verilator lint_off WIDTH */
 
-assign beq_check = (rs1_data == rs1_data);
+assign beq_check = (rs1_data == rs2_data);
 assign bne_check = ~beq_check;
 assign blt_check = (rs1_data[63] & ~rs2_data[63]) | (~(rs1_data[63] ^ rs2_data[63]) & data_result[63]);
 assign bge_check = ~blt_check;
 assign bltu_check = ~data_cout;
 assign bgeu_check = ~bltu_check;
 
-assign b_en = (b_check[5] && beq_check || b_check[4] && bne_check || b_check[3] && blt_check || b_check[2] && bge_check || b_check[1] && bltu_check || b_check[1] && bgeu_check);
+assign b_en = ((b_check[5] & beq_check) | (b_check[4] & bne_check) | (b_check[3] & blt_check) | (b_check[2] & bge_check) | (b_check[1] & bltu_check) | (b_check[0] & bgeu_check));
 
 assign pc_sel_out = b_en? 3'b010: pc_sel;
 

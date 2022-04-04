@@ -14,7 +14,7 @@ module ysyx_22040125_inst_RAM (
         $readmemh("/home/sakamoto/ysyx-workbench/npc/mem/program.hex", rom);
     end
 
-    assign addr = {(cpu_pc-64'h80000000)/(64'd4)}[15:0];
+    assign addr = {(cpu_pc-64'h80000000)>>2}[15:0];
 
     always @(posedge clk) begin
         if (!rst) begin

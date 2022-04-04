@@ -17,6 +17,7 @@ module ysyx_22040125_EXE_REG (
         input  wire         exe_reg_in14,
         input  wire[2:0]    exe_reg_in15,
         input  wire[5:0]    exe_reg_in16,
+        input  wire         exe_reg_in17,
         output reg[63:0]    exe_reg_out0,
         output reg[11:0]    exe_reg_out1,
         output reg[4:0]     exe_reg_out2,
@@ -32,7 +33,8 @@ module ysyx_22040125_EXE_REG (
         output reg[4:0]     exe_reg_out13,
         output reg          exe_reg_out14,
         output reg[2:0]     exe_reg_out15,
-        output reg[5:0]     exe_reg_out16
+        output reg[5:0]     exe_reg_out16,
+        output reg          exe_reg_out17
     );
 
     always @(posedge clk) begin
@@ -53,6 +55,7 @@ module ysyx_22040125_EXE_REG (
             exe_reg_out14 <= 0;
             exe_reg_out15 <= 0;
             exe_reg_out16 <= 0;
+            exe_reg_out17 <= 0;
         end
         else begin
             exe_reg_out0  <= exe_reg_in0;
@@ -71,6 +74,7 @@ module ysyx_22040125_EXE_REG (
             exe_reg_out14 <= exe_reg_in14;
             exe_reg_out15 <= exe_reg_in15;
             exe_reg_out16 <= exe_reg_in16;
+            exe_reg_out17 <= exe_reg_in17;
         end
     end
 

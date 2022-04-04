@@ -20,8 +20,8 @@ module ysyx_22040125_REG (
         end 
     end
 
-    assign data_rs1 = (addr_rs1 == 0)? 64'b0 : reg_com[addr_rs1];
-    assign data_rs2 = (addr_rs2 == 0)? 64'b0 : reg_com[addr_rs2];
+    assign data_rs1 = (addr_rs1 == 0)? 64'b0 : (addr_rs1 == addr_rd)? data_rd: reg_com[addr_rs1];
+    assign data_rs2 = (addr_rs2 == 0)? 64'b0 : (addr_rs2 == addr_rd)? data_rd: reg_com[addr_rs2];
     assign data_a0 = reg_com[10];
 
 endmodule //ysyx_22040125_REG

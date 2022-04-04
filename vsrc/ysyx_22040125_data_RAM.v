@@ -6,14 +6,26 @@ module ysyx_22040125_data_RAM (
         input  wire        data_wen,
         input  wire        data_ren,
         input  wire        clk,
-        output reg[63:0]  rdata
+        output reg[63:0]        outdata,
+        output reg[63:0]   rdata
     );
+
     import "DPI-C" function void set_ram_ptr(input logic [63:0] a []);
     initial set_ram_ptr(ram); 
 
     wire op_sb, op_sh, op_sw, op_lb, op_lbu, op_lh, op_lhu, op_lw, op_lwu;
+    wire[31:0]  addr;
     wire[63:0]  rdata_out;
-    reg [63:0]  ram [4294967295:0];
+    reg [31:0]  ram [400000:0];
+    wire[63:0] rom;
+
+    
+    initial begin
+        $readmemh("/home/sakamoto/ysyx-workbench/npc/mem/program_d.hex", ram);
+    end
+
+    assign addr = (ram_addr-32'h80000000)>>2;
+    assign rom = {ram[addr+1], ram[addr]};
 
     assign op_sb = s_bhwd[2];
     assign op_sh = s_bhwd[1];
@@ -26,84 +38,85 @@ module ysyx_22040125_data_RAM (
     assign op_lw  = l_bhw[1];
     assign op_lwu = l_bhw[0];
 
-    assign rdata_out =  (op_lb && ram_addr[2:0] == 3'b000)? {{56{ram[ram_addr][7]}}, ram[ram_addr][7:0]} :
-                        (op_lb && ram_addr[2:0] == 3'b001)? {{56{ram[ram_addr][15]}},ram[ram_addr][15:8]} :
-                        (op_lb && ram_addr[2:0] == 3'b010)? {{56{ram[ram_addr][23]}},ram[ram_addr][23:16]} :
-                        (op_lb && ram_addr[2:0] == 3'b011)? {{56{ram[ram_addr][31]}},ram[ram_addr][31:24]} :
-                        (op_lb && ram_addr[2:0] == 3'b100)? {{56{ram[ram_addr][39]}},ram[ram_addr][39:32]} :
-                        (op_lb && ram_addr[2:0] == 3'b101)? {{56{ram[ram_addr][47]}},ram[ram_addr][47:40]} :
-                        (op_lb && ram_addr[2:0] == 3'b110)? {{56{ram[ram_addr][55]}},ram[ram_addr][55:48]} :
-                        (op_lb && ram_addr[2:0] == 3'b111)? {{56{ram[ram_addr][63]}},ram[ram_addr][63:56]} :
-                        (op_lbu && ram_addr[2:0] == 3'b000)? {56'd0,ram[ram_addr][7:0]} :
-                        (op_lbu && ram_addr[2:0] == 3'b001)? {56'd0,ram[ram_addr][15:8]} :
-                        (op_lbu && ram_addr[2:0] == 3'b010)? {56'd0,ram[ram_addr][23:16]} :
-                        (op_lbu && ram_addr[2:0] == 3'b011)? {56'd0,ram[ram_addr][31:24]} :
-                        (op_lbu && ram_addr[2:0] == 3'b100)? {56'd0,ram[ram_addr][39:32]} :
-                        (op_lbu && ram_addr[2:0] == 3'b101)? {56'd0,ram[ram_addr][47:40]} :
-                        (op_lbu && ram_addr[2:0] == 3'b101)? {56'd0,ram[ram_addr][55:48]} :
-                        (op_lbu && ram_addr[2:0] == 3'b111)? {56'd0,ram[ram_addr][63:56]} :
-                        (op_lh && ram_addr[2:0] == 3'b000)? {{48{ram[ram_addr][15]}},ram[ram_addr][15:0]} :
-                        (op_lh && ram_addr[2:0] == 3'b010)? {{48{ram[ram_addr][31]}},ram[ram_addr][31:16]} :
-                        (op_lh && ram_addr[2:0] == 3'b100)? {{48{ram[ram_addr][47]}},ram[ram_addr][47:32]} :
-                        (op_lh && ram_addr[2:0] == 3'b110)? {{48{ram[ram_addr][63]}},ram[ram_addr][63:48]} :
-                        (op_lhu && ram_addr[2:0] == 3'b000)? {48'd0,ram[ram_addr][15:0]} :
-                        (op_lhu && ram_addr[2:0] == 3'b010)? {48'd0,ram[ram_addr][31:16]} :
-                        (op_lhu && ram_addr[2:0] == 3'b100)? {48'd0,ram[ram_addr][47:32]} :
-                        (op_lhu && ram_addr[2:0] == 3'b110)? {48'd0,ram[ram_addr][63:48]} :
-                        (op_lw && ram_addr[2:0] == 3'b000)? {{32{ram[ram_addr][31]}},ram[ram_addr][31:0]} :
-                        (op_lw && ram_addr[2:0] == 3'b100)? {{32{ram[ram_addr][63]}},ram[ram_addr][63:32]} :
-                        (op_lwu && ram_addr[2:0] == 3'b000)? {32'd0,ram[ram_addr][31:0]} :
-                        (op_lwu && ram_addr[2:0] == 3'b100)? {32'd0,ram[ram_addr][63:32]} : ram[ram_addr];
+    assign rdata_out =  (op_lb && ram_addr[2:0] == 3'b000)? {{56{rom[7]}}, rom[7:0]} :
+                        (op_lb && ram_addr[2:0] == 3'b001)? {{56{rom[15]}},rom[15:8]} :
+                        (op_lb && ram_addr[2:0] == 3'b010)? {{56{rom[23]}},rom[23:16]} :
+                        (op_lb && ram_addr[2:0] == 3'b011)? {{56{rom[31]}},rom[31:24]} :
+                        (op_lb && ram_addr[2:0] == 3'b100)? {{56{rom[39]}},rom[39:32]} :
+                        (op_lb && ram_addr[2:0] == 3'b101)? {{56{rom[47]}},rom[47:40]} :
+                        (op_lb && ram_addr[2:0] == 3'b110)? {{56{rom[55]}},rom[55:48]} :
+                        (op_lb && ram_addr[2:0] == 3'b111)? {{56{rom[63]}},rom[63:56]} :
+                        (op_lbu && ram_addr[2:0] == 3'b000)? {56'd0,rom[7:0]} :
+                        (op_lbu && ram_addr[2:0] == 3'b001)? {56'd0,rom[15:8]} :
+                        (op_lbu && ram_addr[2:0] == 3'b010)? {56'd0,rom[23:16]} :
+                        (op_lbu && ram_addr[2:0] == 3'b011)? {56'd0,rom[31:24]} :
+                        (op_lbu && ram_addr[2:0] == 3'b100)? {56'd0,rom[39:32]} :
+                        (op_lbu && ram_addr[2:0] == 3'b101)? {56'd0,rom[47:40]} :
+                        (op_lbu && ram_addr[2:0] == 3'b101)? {56'd0,rom[55:48]} :
+                        (op_lbu && ram_addr[2:0] == 3'b111)? {56'd0,rom[63:56]} :
+                        (op_lh && ram_addr[2:0] == 3'b000)? {{48{rom[15]}},rom[15:0]} :
+                        (op_lh && ram_addr[2:0] == 3'b010)? {{48{rom[31]}},rom[31:16]} :
+                        (op_lh && ram_addr[2:0] == 3'b100)? {{48{rom[47]}},rom[47:32]} :
+                        (op_lh && ram_addr[2:0] == 3'b110)? {{48{rom[63]}},rom[63:48]} :
+                        (op_lhu && ram_addr[2:0] == 3'b000)? {48'd0,rom[15:0]} :
+                        (op_lhu && ram_addr[2:0] == 3'b010)? {48'd0,rom[31:16]} :
+                        (op_lhu && ram_addr[2:0] == 3'b100)? {48'd0,rom[47:32]} :
+                        (op_lhu && ram_addr[2:0] == 3'b110)? {48'd0,rom[63:48]} :
+                        (op_lw && ram_addr[2:0] == 3'b000)? {{32{rom[31]}},rom[31:0]} :
+                        (op_lw && ram_addr[2:0] == 3'b100)? {{32{rom[63]}},rom[63:32]} :
+                        (op_lwu && ram_addr[2:0] == 3'b000)? {32'd0,rom[31:0]} :
+                        (op_lwu && ram_addr[2:0] == 3'b100)? {32'd0,rom[63:32]} : rom;
 
     always @(posedge clk) begin
         if (data_wen && op_sb && ram_addr[2:0] == 3'b000) begin
-            ram[ram_addr][7:0] = wdata[7:0];
+            ram[addr][7:0] = wdata[7:0];
         end
         if (data_wen && op_sb && ram_addr[2:0] == 3'b001) begin
-            ram[ram_addr][15:8] = wdata[7:0];
+            ram[addr][15:8] = wdata[7:0];
         end
         if (data_wen && op_sb && ram_addr[2:0] == 3'b010) begin
-            ram[ram_addr][23:16] = wdata[7:0];
+            ram[addr][23:16] = wdata[7:0];
         end
         if (data_wen && op_sb && ram_addr[2:0] == 3'b011) begin
-            ram[ram_addr][31:24] = wdata[7:0];
+            ram[addr][31:24] = wdata[7:0];
         end
         if (data_wen && op_sb && ram_addr[2:0] == 3'b100) begin
-            ram[ram_addr][39:32] = wdata[7:0];
+            ram[addr+1][7:0] = wdata[7:0];
         end
         if (data_wen && op_sb && ram_addr[2:0] == 3'b101) begin
-            ram[ram_addr][47:40] = wdata[7:0];
+            ram[addr+1][15:8] = wdata[7:0];
         end
         if (data_wen && op_sb && ram_addr[2:0] == 3'b110) begin
-            ram[ram_addr][55:48] = wdata[7:0];
+            ram[addr+1][23:16] = wdata[7:0];
         end
         if (data_wen && op_sb && ram_addr[2:0] == 3'b111) begin
-            ram[ram_addr][63:56] = wdata[7:0];
+            ram[addr+1][31:24] = wdata[7:0];
         end
         if (data_wen && op_sh && ram_addr[2:0] == 3'b000) begin
-            ram[ram_addr][15:0] = wdata[15:0];
+            ram[addr][15:0] = wdata[15:0];
         end
         if (data_wen && op_sh && ram_addr[2:0] == 3'b010) begin
-            ram[ram_addr][31:16] = wdata[15:0];
+            ram[addr][31:16] = wdata[15:0];
         end
         if (data_wen && op_sh && ram_addr[2:0] == 3'b100) begin
-            ram[ram_addr][47:32] = wdata[15:0];
+            ram[addr+1][15:0] = wdata[15:0];
         end
         if (data_wen && op_sh && ram_addr[2:0] == 3'b110) begin
-            ram[ram_addr][63:48] = wdata[15:0];
+            ram[addr+1][31:16] = wdata[15:0];
         end
         if (data_wen && op_sw && ram_addr[2:0] == 3'b000) begin
-            ram[ram_addr][31:0] = wdata[31:0];
+            ram[addr] = wdata[31:0];
         end
         if (data_wen && op_sw && ram_addr[2:0] == 3'b100) begin
-            ram[ram_addr][63:32] = wdata[31:0];
+            ram[addr+1] = wdata[31:0];
         end
         if (data_wen && s_bhwd == 3'd0) begin
-            ram[ram_addr] = wdata;
+            {ram[addr+1], ram[addr]} = wdata;
+            outdata = rom;
         end
         if (data_ren) begin
             rdata = rdata_out;
-        end
+        end        
     end
 
 endmodule //ysyx_22040125_data_RAM
