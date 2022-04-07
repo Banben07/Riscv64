@@ -14,7 +14,7 @@ module ysyx_22040125_ID_REG (
             id_reg_out0 <= 0;
             id_reg_out1 <= 0;
         end
-        else if (IF_Flush) begin
+        else if (IF_Flush && (~stall)) begin
             id_reg_out0 <= 32'hffffffff;
             id_reg_out1 <= id_reg_in1;
         end 

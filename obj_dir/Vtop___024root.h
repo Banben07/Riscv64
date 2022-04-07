@@ -63,6 +63,9 @@ VL_MODULE(Vtop___024root) {
         CData/*5:0*/ top__DOT__mem_reg_l_bhw;
         CData/*0:0*/ top__DOT__idu__DOT__TYPE_I;
         CData/*0:0*/ top__DOT__idu__DOT__TYPE_U;
+        CData/*0:0*/ top__DOT__idu__DOT__inst_remw;
+        CData/*0:0*/ top__DOT__idu__DOT__inst_mulw;
+        CData/*0:0*/ top__DOT__idu__DOT__inst_divw;
         CData/*0:0*/ top__DOT__idu__DOT__inst_lwu;
         CData/*0:0*/ top__DOT__idu__DOT__inst_jalr;
         CData/*0:0*/ top__DOT__idu__DOT__inst_lb;
@@ -85,19 +88,21 @@ VL_MODULE(Vtop___024root) {
         CData/*0:0*/ top__DOT__b_check_out__DOT__data_cout;
         CData/*0:0*/ top__DOT__alu__DOT__data_cin;
         CData/*0:0*/ top__DOT__ebreak_list__DOT__ebreak_1;
-        SData/*11:0*/ top__DOT__op;
-        SData/*11:0*/ top__DOT__op_out;
-        SData/*11:0*/ top__DOT__exe_reg_op;
-        SData/*15:0*/ top__DOT__inst_addr;
-        SData/*11:0*/ top__DOT__ebreak_list__DOT__op_1;
-        IData/*31:0*/ top__DOT__inst;
+        SData/*14:0*/ top__DOT__op;
+        SData/*14:0*/ top__DOT__op_out;
+        SData/*14:0*/ top__DOT__exe_reg_op;
     };
     struct {
+        SData/*15:0*/ top__DOT__inst_addr;
+        SData/*14:0*/ top__DOT__ebreak_list__DOT__op_1;
+        IData/*31:0*/ top__DOT__inst;
         IData/*31:0*/ top__DOT__mem_reg_ram_addr;
         IData/*31:0*/ top__DOT__inst_id;
         IData/*31:0*/ top__DOT__inst_out;
         IData/*31:0*/ top__DOT__alu__DOT__srl_w1_result;
         IData/*31:0*/ top__DOT__alu__DOT__sra_w1_result;
+        IData/*31:0*/ top__DOT__alu__DOT__div_w1_result;
+        IData/*31:0*/ top__DOT__alu__DOT__rem_w1_result;
         IData/*31:0*/ top__DOT__ebreak_list__DOT__inst_1;
         QData/*63:0*/ top__DOT__imm;
         QData/*63:0*/ top__DOT__b_src2;
@@ -130,6 +135,9 @@ VL_MODULE(Vtop___024root) {
         QData/*63:0*/ top__DOT__src1;
         QData/*63:0*/ top__DOT__src2;
         QData/*63:0*/ top__DOT__data_rd_in;
+        QData/*63:0*/ top__DOT__alu__DOT__rem_d_result;
+        QData/*63:0*/ top__DOT__alu__DOT__div_d_result;
+        QData/*63:0*/ top__DOT__alu__DOT__mul_d_result;
         QData/*63:0*/ top__DOT__alu__DOT__sll_w1_result;
         QData/*63:0*/ top__DOT__alu__DOT__add_sub_result;
         QData/*63:0*/ top__DOT__alu__DOT__srl_mid_result;

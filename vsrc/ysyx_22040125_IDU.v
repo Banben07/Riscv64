@@ -2,7 +2,7 @@
 module ysyx_22040125_IDU (
         input  wire[31:0]   inst,
         output wire[63:0]   imm,
-        output wire[11:0]   op,
+        output wire[14:0]   op,
         output wire[5:0]    b_check,
         output wire[5:0]    l_bhw,
         output wire[4:0]    rd,
@@ -21,9 +21,9 @@ module ysyx_22040125_IDU (
     );
 
     wire          TYPE_I, TYPE_U, TYPE_S, TYPE_J, TYPE_B, TYPE_R;
-    wire          inst_lui, inst_lwu, inst_auipc, inst_jal, inst_beq, inst_bne, inst_blt, inst_bge, inst_bltu, inst_bgeu, inst_jalr, inst_lb, inst_lh, inst_lw, inst_ld, inst_lbu, inst_lhu, inst_addi, inst_slti, inst_sltiu, inst_xori, inst_ori, inst_andi, inst_slli, inst_srli, inst_srai, inst_ebreak, inst_sb, inst_sh, inst_sw, inst_sd, inst_add, inst_sub, inst_sll, inst_slt, inst_sltu, inst_xor, inst_srl, inst_sra, inst_or, inst_and;
+    wire          inst_lui, inst_rem, inst_remw, inst_mul, inst_mulw, inst_div, inst_divw, inst_lwu, inst_auipc, inst_jal, inst_beq, inst_bne, inst_blt, inst_bge, inst_bltu, inst_bgeu, inst_jalr, inst_lb, inst_lh, inst_lw, inst_ld, inst_lbu, inst_lhu, inst_addi, inst_slti, inst_sltiu, inst_xori, inst_ori, inst_andi, inst_slli, inst_srli, inst_srai, inst_ebreak, inst_sb, inst_sh, inst_sw, inst_sd, inst_add, inst_sub, inst_sll, inst_slt, inst_sltu, inst_xor, inst_srl, inst_sra, inst_or, inst_and;
     wire          l_check;
-    wire          op_sll, op_slt, op_sltu, op_xor, op_srl, op_sra, op_or, op_and;
+    wire          op_sll, op_rem, op_mul, op_div, op_slt, op_sltu, op_xor, op_srl, op_sra, op_or, op_and;
     wire          inst_addiw, inst_slliw, inst_srliw, inst_sraiw, inst_addw, inst_subw, inst_sllw, inst_srlw, inst_sraw;
     wire  [63:0]  immI, immU, immS, immJ, immB;
     wire  [6:0]   opcode, funct7;
@@ -111,6 +111,12 @@ module ysyx_22040125_IDU (
     assign inst_sllw = (opcode == 7'b0111011 && funct3 == 3'b001 && funct7 == 7'b0000000);
     assign inst_srlw = (opcode == 7'b0111011 && funct3 == 3'b101 && funct7 == 7'b0000000);
     assign inst_sraw = (opcode == 7'b0111011 && funct3 == 3'b101 && funct7 == 7'b0100000);
+    assign inst_mul = (opcode == 7'b0110011 && funct3 == 3'b000 && funct7 == 7'b0000001);
+    assign inst_mulw = (opcode == 7'b0111011 && funct3 == 3'b000 && funct7 == 7'b0000001);
+    assign inst_div = (opcode == 7'b0110011 && funct3 == 3'b100 && funct7 == 7'b0000001);
+    assign inst_divw = (opcode == 7'b0111011 && funct3 == 3'b100 && funct7 == 7'b0000001);
+    assign inst_rem = (opcode == 7'b0110011 && funct3 == 3'b110 && funct7 == 7'b0000001);
+    assign inst_remw = (opcode == 7'b0111011 && funct3 == 3'b110 && funct7 == 7'b0000001);
     
     assign l_check = inst_lb | inst_lh | inst_lw | inst_ld | inst_lbu | inst_lhu | inst_lwu;
     
@@ -122,6 +128,9 @@ module ysyx_22040125_IDU (
     assign op_sra = inst_sra | inst_sraw | inst_srai | inst_sraiw;
     assign op_or = inst_or | inst_ori;
     assign op_and = inst_and | inst_andi;
+    assign op_mul = inst_mul | inst_mulw;
+    assign op_div = inst_div | inst_divw;
+    assign op_rem = inst_rem | inst_remw;
 
     assign op = (inst_add || inst_addw || inst_addi || inst_addiw || l_check || TYPE_S || inst_auipc || TYPE_B)?     `OP_ADD  :
            (inst_sub || inst_subw)?  `OP_SUB  :
@@ -135,7 +144,10 @@ module ysyx_22040125_IDU (
            op_and?              `OP_AND  :
            inst_lui?            `OP_LUI  :
            inst_jal?            `OP_JAL  :
-           inst_jalr?           `OP_JAL  :0;
+           inst_jalr?           `OP_JAL  :
+           op_mul?              `OP_MUL  :
+           op_div?              `OP_DIV  :
+           op_rem?              `OP_REM  :0;
 
     assign src1_sel = (TYPE_J || inst_jalr || inst_auipc)? 2'b01: 2'b10;
     assign src2_sel = (TYPE_J || TYPE_U || TYPE_I)? 2'b01: 2'b10;
@@ -148,6 +160,6 @@ module ysyx_22040125_IDU (
     assign b_check = {inst_beq, inst_bne, inst_blt, inst_bge, inst_bltu, inst_bgeu};
     assign s_bhwd = {inst_sb, inst_sh, inst_sw};
     assign l_bhw = {inst_lb, inst_lbu, inst_lh, inst_lhu, inst_lw, inst_lwu};
-    assign w_check = inst_addiw | inst_slliw | inst_srliw | inst_sraiw | inst_addw | inst_subw | inst_sllw | inst_srlw | inst_sraw;
+    assign w_check = inst_addiw | inst_remw | inst_slliw | inst_srliw | inst_sraiw | inst_addw | inst_subw | inst_sllw | inst_srlw | inst_sraw | inst_mulw | inst_divw;
 
 endmodule //ysyx_22040125_IDU

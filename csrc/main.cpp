@@ -6,7 +6,7 @@
 #include "verilated_dpi.h"
 #include <common.h>
 
-const int sim_time = 10240;
+const int sim_time = 10240000;
 VerilatedContext* contextp = new VerilatedContext;
 Vtop* top = new Vtop{contextp};
 VerilatedVcdC* tfp = new VerilatedVcdC;

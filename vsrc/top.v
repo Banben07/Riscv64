@@ -5,13 +5,13 @@ module top (
         output wire[63:0] outdata
     );
 
-    wire         w_check, exe_reg_w_check, data_wen, data_wen_out, reg_wen_out, stall_control, data_ren, exe_reg_data_ren, mem_reg_data_ren, IF_Flush, ebreak, ebreak_out, reg_wen, mem_reg_reg_wen,mem_reg_data_wen,exe_reg_data_wen, exe_reg_reg_wen, wb_reg_reg_wen;
+    wire         w_check, data_ren_out, exe_reg_w_check, data_wen, data_wen_out, reg_wen_out, stall_control, data_ren, exe_reg_data_ren, mem_reg_data_ren, IF_Flush, ebreak, ebreak_out, reg_wen, mem_reg_reg_wen,mem_reg_data_wen,exe_reg_data_wen, exe_reg_reg_wen, wb_reg_reg_wen;
     wire[1:0]    src1_sel, wb_reg_load_sel, mem_reg_load_sel, exe_reg_src1_sel, src2_sel, exe_reg_src2_sel, load_sel, exe_reg_load_sel;
     wire[2:0]    pc_sel, mem_reg_s_bhwd, s_bhwd, exe_reg_s_bhwd, pc_sel_out, src1_sel_plus, src2_sel_plus, wb_reg_pc_sel, mem_reg_pc_sel, exe_reg_pc_sel;
     wire[3:0]    pc_add_rs1_sel, b_check_rs2_sel;
     wire[4:0]    rs1, rs2, exe_reg_rs1, exe_reg_rs2, rd, mem_reg_rd,exe_reg_rd, wb_reg_rd;
     wire[5:0]    b_check, l_bhw, exe_reg_l_bhw, mem_reg_l_bhw;
-    wire[11:0]   op, op_out, exe_reg_op;
+    wire[14:0]   op, op_out, exe_reg_op;
     wire[15:0]   inst_addr;
     wire[31:0]   inst, ram_addr, mem_reg_ram_addr, inst_id, inst_out;
     wire[63:0]   imm, b_src2, src2_out, pc_src1, data_a0, one_src1, one_src2, if_pc, exe_reg_src1_rs1, exe_reg_src1, exe_reg_src2, exe_reg_src2_rs2, mem_reg_pc, wb_reg_rdata, wb_reg_data_rd_in, mem_reg_src2_rs2, mem_reg_data_rd_in, mem_reg_cpu_dnpc_in1, mem_reg_cpu_dnpc_in2,exe_reg_imm, cpu_pc, wb_reg_pc, wb_reg_cpu_dnpc_in1, wb_reg_cpu_dnpc_in2, exe_reg_pc, cpu_ifpc, if_reg_pc, id_reg_pc, cpu_dnpc, cpu_snpc, rdata, src1_rs1, src2_rs2, cpu_dnpc_in1, cpu_dnpc_in2, src1, src2, data_rd_in;
@@ -24,6 +24,8 @@ module top (
                             .rs2(rs2),
                             .exe_reg_rd(exe_reg_rd),
                             .exe_reg_data_ren(exe_reg_data_ren),
+                            .mem_reg_rd(mem_reg_rd),
+                            .mem_reg_data_ren(mem_reg_data_ren),
                             .stall_control(stall_control),
                             .IF_Flush(IF_Flush)
                         );
@@ -105,9 +107,11 @@ module top (
                         
     ysyx_22040125_control_stall control_stall(
                             .data_wen(data_wen),
+                            .data_ren(data_ren),
                             .reg_wen(reg_wen),
                             .stall(stall_control),
                             .data_wen_out(data_wen_out),
+                            .data_ren_out(data_ren_out),
                             .reg_wen_out(reg_wen_out)
                         );
 
@@ -173,7 +177,7 @@ module top (
                             .exe_reg_in11(imm),
                             .exe_reg_in12(rs1),
                             .exe_reg_in13(rs2),
-                            .exe_reg_in14(data_ren),
+                            .exe_reg_in14(data_ren_out),
                             .exe_reg_in15(s_bhwd),
                             .exe_reg_in16(l_bhw),
                             .exe_reg_in17(w_check),
@@ -318,11 +322,11 @@ module top (
                         );
 
     always @(posedge clk) begin
-        if ((ebreak_out == 1) && (data_a0 == 64'hc0ffee)) begin
+        if ((ebreak_out == 1) && (data_a0 == 64'h0)) begin
             $display("\033[1;32mHIT GOOD TRAP\033[0m");
             $finish;
         end
-        else if((ebreak_out == 1) && (data_a0 != 64'hc0ffee)) begin
+        else if((ebreak_out == 1) && (data_a0 != 64'h0)) begin
             $display("\033[1;31mHIT BAD TRAP\033[0m");
             $finish;
         end

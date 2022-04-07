@@ -14,17 +14,19 @@ module ysyx_22040125_data_RAM (
     initial set_ram_ptr(ram); 
 
     wire op_sb, op_sh, op_sw, op_lb, op_lbu, op_lh, op_lhu, op_lw, op_lwu;
-    wire[31:0]  addr;
+    wire[31:0]  addr, addr1;
     wire[63:0]  rdata_out;
     reg [31:0]  ram [400000:0];
     wire[63:0] rom;
 
     
     initial begin
+        $readmemh("/home/sakamoto/ysyx-workbench/npc/mem/program.hex", ram);
         $readmemh("/home/sakamoto/ysyx-workbench/npc/mem/program_d.hex", ram);
     end
 
-    assign addr = (ram_addr-32'h80000000)>>2;
+    assign addr1 = (ram_addr-32'h80000000) >> 3;
+    assign addr = addr1 << 1;
     assign rom = {ram[addr+1], ram[addr]};
 
     assign op_sb = s_bhwd[2];
@@ -52,7 +54,7 @@ module ysyx_22040125_data_RAM (
                         (op_lbu && ram_addr[2:0] == 3'b011)? {56'd0,rom[31:24]} :
                         (op_lbu && ram_addr[2:0] == 3'b100)? {56'd0,rom[39:32]} :
                         (op_lbu && ram_addr[2:0] == 3'b101)? {56'd0,rom[47:40]} :
-                        (op_lbu && ram_addr[2:0] == 3'b101)? {56'd0,rom[55:48]} :
+                        (op_lbu && ram_addr[2:0] == 3'b110)? {56'd0,rom[55:48]} :
                         (op_lbu && ram_addr[2:0] == 3'b111)? {56'd0,rom[63:56]} :
                         (op_lh && ram_addr[2:0] == 3'b000)? {{48{rom[15]}},rom[15:0]} :
                         (op_lh && ram_addr[2:0] == 3'b010)? {{48{rom[31]}},rom[31:16]} :
