@@ -18,7 +18,7 @@ module top (
 
     assign cpu_snpc = cpu_pc + 64'd4;
 
-    ysyx_22040125_Hazard_unit Hazard_unit(
+    ysyx_22040125_CTRL ctrl(
                             .pc_jump(pc_sel_out),
                             .rs1(rs1),
                             .rs2(rs2),
@@ -27,18 +27,19 @@ module top (
                             .mem_reg_rd(mem_reg_rd),
                             .mem_reg_data_ren(mem_reg_data_ren),
                             .stall_control(stall_control),
-                            .IF_Flush(IF_Flush)
-                        );
-    
-    ysyx_22040125_Foward_unit Foward_unit(
+                            .IF_Flush(IF_Flush),
+                            .data_wen(data_wen),
+                            .data_ren(data_ren),
+                            .reg_wen(reg_wen),
+                            .data_wen_out(data_wen_out),
+                            .data_ren_out(data_ren_out),
+                            .reg_wen_out(reg_wen_out),
                             .exe_reg_rs1(exe_reg_rs1),
                             .exe_reg_rs2(exe_reg_rs2),
                             .pc_rs1(rs1),
                             .b_rs2(rs2),
                             .rs1_sel(exe_reg_src1_sel),
                             .rs2_sel(exe_reg_src2_sel),
-                            .exe_reg_rd(exe_reg_rd),
-                            .mem_reg_rd(mem_reg_rd),
                             .wb_reg_rd(wb_reg_rd),
                             .exe_reg_reg_wen(exe_reg_reg_wen),
                             .mem_reg_reg_wen(mem_reg_reg_wen),
@@ -63,14 +64,6 @@ module top (
                          .stall(stall_control),
                          .cpu_dnpc(cpu_dnpc),
                          .cpu_pc(cpu_pc)
-                        );
-
-    ysyx_22040125_inst_RAM inst_ram(
-                            .cpu_pc(cpu_pc),
-                            .rst(rst),
-                            .clk(clk),
-                            .inst(inst),
-                            .if_pc(if_pc)
                         );
 
     ysyx_22040125_ID_REG id_reg(
@@ -104,16 +97,6 @@ module top (
                             .b_check(b_check),
                             .w_check(w_check)
                         );
-                        
-    ysyx_22040125_control_stall control_stall(
-                            .data_wen(data_wen),
-                            .data_ren(data_ren),
-                            .reg_wen(reg_wen),
-                            .stall(stall_control),
-                            .data_wen_out(data_wen_out),
-                            .data_ren_out(data_ren_out),
-                            .reg_wen_out(reg_wen_out)
-                        );
 
     ysyx_22040125_REG common_reg(
                             .addr_rd(wb_reg_rd),
@@ -127,40 +110,23 @@ module top (
                             .data_rs2(src2_rs2)
                         );
     
-    ysyx_22040125_MUX41 pc_add_src1_choice(
-                            .in0(src1_rs1),
-                            .in1(data_rd_in),
-                            .in2(mem_reg_data_rd_in),
-                            .in3(data_rd),
-                            .key(pc_add_rs1_sel),
-                            .out(pc_src1)
-                        );
-
-    ysyx_22040125_MUX41 b_check_rs2_choice(
-                            .in0(src2_rs2),
-                            .in1(data_rd_in),
-                            .in2(mem_reg_data_rd_in),
-                            .in3(data_rd),
-                            .key(b_check_rs2_sel),
-                            .out(b_src2)
-                        );
-
-    ysyx_22040125_PC_ADD pc_add(
-                            .pc_in(id_reg_pc),
-                            .src1_in(pc_src1),
-                            .imm_in(imm),
+    ysyx_22040125_PC_SEL pc_sel_check(
+                            .src1_rs1(src1_rs1),
+                            .data_rd_in(data_rd_in),
+                            .mem_reg_data_rd_in(mem_reg_data_rd_in),
+                            .data_rd(data_rd),
+                            .src2_rs2(src2_rs2),
+                            .pc_add_rs1_sel(pc_add_rs1_sel),
+                            .b_check_rs2_sel(b_check_rs2_sel),
+                            .id_reg_pc(id_reg_pc),
+                            .imm(imm),
+                            .b_check(b_check),
+                            .pc_sel(pc_sel),
+                            .pc_sel_out(pc_sel_out),
                             .cpu_dnpc_in1(cpu_dnpc_in1),
                             .cpu_dnpc_in2(cpu_dnpc_in2)
                         );
     
-    ysyx_22040125_B_CHECK b_check_out(
-                            .b_check(b_check),
-                            .pc_sel(pc_sel),
-                            .rs1_data(pc_src1),
-                            .rs2_data(b_src2),
-                            .pc_sel_out(pc_sel_out)
-                        );
-
     ysyx_22040125_EXE_REG exe_reg(
                             .clk(clk),
                             .rst(rst),
@@ -200,34 +166,19 @@ module top (
                             .exe_reg_out17(exe_reg_w_check)
                         );
 
-    ysyx_22040125_MUX21 src1_sel_choice(
-                            .in0(exe_reg_pc),
-                            .in1(exe_reg_src1_rs1),
-                            .key(exe_reg_src1_sel),
-                            .out(one_src1)
-                        );
-
-    ysyx_22040125_MUX21 src2_sel_choice(
-                            .in0(exe_reg_imm),
-                            .in1(exe_reg_src2_rs2),
-                            .key(exe_reg_src2_sel),
-                            .out(one_src2)
-                        );
-    
-    ysyx_22040125_MUX31 src1_sel_choice_out(
-                            .in0(one_src1),
-                            .in1(mem_reg_data_rd_in),
-                            .in2(data_rd),
-                            .key(src1_sel_plus),
-                            .out(src1)
-                        );
-
-    ysyx_22040125_MUX31 src2_sel_choice_out(
-                            .in0(one_src2),
-                            .in1(mem_reg_data_rd_in),
-                            .in2(data_rd),
-                            .key(src2_sel_plus),
-                            .out(src2)
+    ysyx_22040125_SRC_SEL src_sel(
+                            .exe_reg_pc(exe_reg_pc),
+                            .exe_reg_src1_rs1(exe_reg_src1_rs1),
+                            .exe_reg_src1_sel(exe_reg_src1_sel),
+                            .exe_reg_imm(exe_reg_imm),
+                            .exe_reg_src2_rs2(exe_reg_src2_rs2),
+                            .exe_reg_src2_sel(exe_reg_src2_sel),
+                            .mem_reg_data_rd_in(mem_reg_data_rd_in),
+                            .data_rd(data_rd),
+                            .src1_sel_plus(src1_sel_plus),
+                            .src2_sel_plus(src2_sel_plus),
+                            .src1(src1),
+                            .src2(src2)
                         );
 
     ysyx_22040125_ALU  alu(
@@ -272,7 +223,7 @@ module top (
                               .mem_reg_out13(mem_reg_l_bhw)
                           );
 
-    ysyx_22040125_data_RAM data_ram(
+    ysyx_22040125_RAM ram(
                                .ram_addr(mem_reg_ram_addr),
                                .wdata(mem_reg_src2_rs2),
                                .s_bhwd(mem_reg_s_bhwd),
@@ -281,7 +232,11 @@ module top (
                                .data_ren(mem_reg_data_ren),
                                .clk(clk),
                                .outdata(outdata),
-                               .rdata(rdata)
+                               .rdata(rdata),
+                               .cpu_pc(cpu_pc),
+                               .rst(rst),
+                               .inst(inst),
+                               .if_pc(if_pc)
                            );
 
     ysyx_22040125_WB_REG wb_reg(

@@ -83,9 +83,9 @@ VL_MODULE(Vtop___024root) {
         CData/*0:0*/ top__DOT__idu__DOT__inst_sllw;
         CData/*0:0*/ top__DOT__idu__DOT__inst_srlw;
         CData/*0:0*/ top__DOT__idu__DOT__inst_sraw;
-        CData/*0:0*/ top__DOT__b_check_out__DOT__beq_check;
-        CData/*0:0*/ top__DOT__b_check_out__DOT__blt_check;
-        CData/*0:0*/ top__DOT__b_check_out__DOT__data_cout;
+        CData/*0:0*/ top__DOT__pc_sel_check__DOT__beq_check;
+        CData/*0:0*/ top__DOT__pc_sel_check__DOT__blt_check;
+        CData/*0:0*/ top__DOT__pc_sel_check__DOT__data_cout;
         CData/*0:0*/ top__DOT__alu__DOT__data_cin;
         CData/*0:0*/ top__DOT__ebreak_list__DOT__ebreak_1;
         SData/*14:0*/ top__DOT__op;
@@ -107,6 +107,8 @@ VL_MODULE(Vtop___024root) {
         QData/*63:0*/ top__DOT__imm;
         QData/*63:0*/ top__DOT__b_src2;
         QData/*63:0*/ top__DOT__pc_src1;
+        QData/*63:0*/ top__DOT__one_src1;
+        QData/*63:0*/ top__DOT__one_src2;
         QData/*63:0*/ top__DOT__if_pc;
         QData/*63:0*/ top__DOT__exe_reg_src1_rs1;
         QData/*63:0*/ top__DOT__exe_reg_src1;
@@ -135,6 +137,8 @@ VL_MODULE(Vtop___024root) {
         QData/*63:0*/ top__DOT__src1;
         QData/*63:0*/ top__DOT__src2;
         QData/*63:0*/ top__DOT__data_rd_in;
+        QData/*63:0*/ top__DOT__pc_sel_check__DOT__pc_src1;
+        QData/*63:0*/ top__DOT__pc_sel_check__DOT__b_src2;
         QData/*63:0*/ top__DOT__alu__DOT__rem_d_result;
         QData/*63:0*/ top__DOT__alu__DOT__div_d_result;
         QData/*63:0*/ top__DOT__alu__DOT__mul_d_result;
@@ -143,31 +147,30 @@ VL_MODULE(Vtop___024root) {
         QData/*63:0*/ top__DOT__alu__DOT__srl_mid_result;
         QData/*63:0*/ top__DOT__alu__DOT__data_b;
         QData/*63:0*/ top__DOT__alu__DOT__data_result;
-        QData/*63:0*/ top__DOT__data_ram__DOT__rdata_out;
-        QData/*63:0*/ top__DOT__data_ram__DOT__rom;
-        VlUnpacked<IData/*31:0*/, 65536> top__DOT__inst_ram__DOT__rom;
+        QData/*63:0*/ top__DOT__ram__DOT__rdata_out;
+        QData/*63:0*/ top__DOT__ram__DOT__rom;
         VlUnpacked<QData/*63:0*/, 32> top__DOT__common_reg__DOT__reg_com;
-        VlUnpacked<IData/*31:0*/, 400001> top__DOT__data_ram__DOT__ram;
+        VlUnpacked<IData/*31:0*/, 400001> top__DOT__ram__DOT__ram;
     };
 
     // LOCAL VARIABLES
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound1;
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound2;
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound3;
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound4;
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound5;
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound6;
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound7;
-    CData/*7:0*/ top__DOT__data_ram__DOT____Vlvbound8;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound1;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound2;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound3;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound4;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound5;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound6;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound7;
+    CData/*7:0*/ top__DOT__ram__DOT____Vlvbound8;
     CData/*0:0*/ __Vclklast__TOP__clk;
-    SData/*15:0*/ top__DOT__data_ram__DOT____Vlvbound9;
-    SData/*15:0*/ top__DOT__data_ram__DOT____Vlvbound10;
-    SData/*15:0*/ top__DOT__data_ram__DOT____Vlvbound11;
-    SData/*15:0*/ top__DOT__data_ram__DOT____Vlvbound12;
-    IData/*31:0*/ top__DOT__data_ram__DOT____Vlvbound13;
-    IData/*31:0*/ top__DOT__data_ram__DOT____Vlvbound14;
-    IData/*31:0*/ top__DOT__data_ram__DOT____Vlvbound15;
-    IData/*31:0*/ top__DOT__data_ram__DOT____Vlvbound16;
+    SData/*15:0*/ top__DOT__ram__DOT____Vlvbound9;
+    SData/*15:0*/ top__DOT__ram__DOT____Vlvbound10;
+    SData/*15:0*/ top__DOT__ram__DOT____Vlvbound11;
+    SData/*15:0*/ top__DOT__ram__DOT____Vlvbound12;
+    IData/*31:0*/ top__DOT__ram__DOT____Vlvbound13;
+    IData/*31:0*/ top__DOT__ram__DOT____Vlvbound14;
+    IData/*31:0*/ top__DOT__ram__DOT____Vlvbound15;
+    IData/*31:0*/ top__DOT__ram__DOT____Vlvbound16;
     VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
 
     // INTERNAL VARIABLES

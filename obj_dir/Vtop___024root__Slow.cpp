@@ -27,27 +27,24 @@ void Vtop___024root::__Vconfigure(Vtop__Syms* _vlSymsp, bool first) {
 Vtop___024root::~Vtop___024root() {
 }
 
+void Vtop___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP(const VlUnpacked<QData/*63:0*/, 32> &a);
 extern const VlWide<13>/*415:0*/ Vtop__ConstPool__CONST_100c5227_0;
 extern const VlWide<13>/*415:0*/ Vtop__ConstPool__CONST_9604d1c4_0;
-void Vtop___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP(const VlUnpacked<QData/*63:0*/, 32> &a);
-void Vtop___024root____Vdpiimwrap_top__DOT__data_ram__DOT__set_ram_ptr__Vdpioc2_TOP(const VlUnpacked<IData/*31:0*/, 400001> &a);
+void Vtop___024root____Vdpiimwrap_top__DOT__ram__DOT__set_ram_ptr__Vdpioc2_TOP(const VlUnpacked<IData/*31:0*/, 400001> &a);
 
-void Vtop___024root___initial__TOP__1(Vtop___024root* vlSelf) {
+void Vtop___024root___initial__TOP__2(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___initial__TOP__1\n"); );
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___initial__TOP__2\n"); );
     // Body
+    Vtop___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP(vlSelf->top__DOT__common_reg__DOT__reg_com);
     VL_READMEM_N(true, 32, 400001, 0, VL_CVT_PACK_STR_NW(13, Vtop__ConstPool__CONST_100c5227_0)
-                 ,  &(vlSelf->top__DOT__data_ram__DOT__ram)
+                 ,  &(vlSelf->top__DOT__ram__DOT__ram)
                  , 0, ~0ULL);
     VL_READMEM_N(true, 32, 400001, 0, VL_CVT_PACK_STR_NW(13, Vtop__ConstPool__CONST_9604d1c4_0)
-                 ,  &(vlSelf->top__DOT__data_ram__DOT__ram)
+                 ,  &(vlSelf->top__DOT__ram__DOT__ram)
                  , 0, ~0ULL);
-    Vtop___024root____Vdpiimwrap_top__DOT__common_reg__DOT__set_gpr_ptr__Vdpioc2_TOP(vlSelf->top__DOT__common_reg__DOT__reg_com);
-    VL_READMEM_N(true, 32, 65536, 0, VL_CVT_PACK_STR_NW(13, Vtop__ConstPool__CONST_100c5227_0)
-                 ,  &(vlSelf->top__DOT__inst_ram__DOT__rom)
-                 , 0, ~0ULL);
-    Vtop___024root____Vdpiimwrap_top__DOT__data_ram__DOT__set_ram_ptr__Vdpioc2_TOP(vlSelf->top__DOT__data_ram__DOT__ram);
+    Vtop___024root____Vdpiimwrap_top__DOT__ram__DOT__set_ram_ptr__Vdpioc2_TOP(vlSelf->top__DOT__ram__DOT__ram);
 }
 
 void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
@@ -324,43 +321,42 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__rs1 = ((0x100073U == vlSelf->top__DOT__inst_id)
                               ? 0xaU : (0x1fU & (vlSelf->top__DOT__inst_id 
                                                  >> 0xfU)));
-    vlSelf->top__DOT__data_ram__DOT__rom = (((QData)((IData)(
-                                                             ((0x61a80U 
-                                                               >= 
-                                                               (0x7ffffU 
-                                                                & ((IData)(1U) 
-                                                                   + 
-                                                                   (0x7fffeU 
-                                                                    & ((vlSelf->top__DOT__mem_reg_ram_addr 
-                                                                        - (IData)(0x80000000U)) 
-                                                                       >> 2U)))))
-                                                               ? 
-                                                              vlSelf->top__DOT__data_ram__DOT__ram
-                                                              [
-                                                              (0x7ffffU 
-                                                               & ((IData)(1U) 
-                                                                  + 
-                                                                  (0x7fffeU 
-                                                                   & ((vlSelf->top__DOT__mem_reg_ram_addr 
-                                                                       - (IData)(0x80000000U)) 
-                                                                      >> 2U))))]
-                                                               : 0U))) 
-                                             << 0x20U) 
-                                            | (QData)((IData)(
-                                                              ((0x61a80U 
-                                                                >= 
-                                                                (0x7fffeU 
-                                                                 & ((vlSelf->top__DOT__mem_reg_ram_addr 
-                                                                     - (IData)(0x80000000U)) 
-                                                                    >> 2U)))
-                                                                ? 
-                                                               vlSelf->top__DOT__data_ram__DOT__ram
-                                                               [
-                                                               (0x7fffeU 
-                                                                & ((vlSelf->top__DOT__mem_reg_ram_addr 
-                                                                    - (IData)(0x80000000U)) 
-                                                                   >> 2U))]
-                                                                : 0U))));
+    vlSelf->top__DOT__ram__DOT__rom = (((QData)((IData)(
+                                                        ((0x61a80U 
+                                                          >= 
+                                                          (0x7ffffU 
+                                                           & ((IData)(1U) 
+                                                              + 
+                                                              (0x7fffeU 
+                                                               & ((vlSelf->top__DOT__mem_reg_ram_addr 
+                                                                   - (IData)(0x80000000U)) 
+                                                                  >> 2U)))))
+                                                          ? 
+                                                         vlSelf->top__DOT__ram__DOT__ram
+                                                         [
+                                                         (0x7ffffU 
+                                                          & ((IData)(1U) 
+                                                             + 
+                                                             (0x7fffeU 
+                                                              & ((vlSelf->top__DOT__mem_reg_ram_addr 
+                                                                  - (IData)(0x80000000U)) 
+                                                                 >> 2U))))]
+                                                          : 0U))) 
+                                        << 0x20U) | (QData)((IData)(
+                                                                    ((0x61a80U 
+                                                                      >= 
+                                                                      (0x7fffeU 
+                                                                       & ((vlSelf->top__DOT__mem_reg_ram_addr 
+                                                                           - (IData)(0x80000000U)) 
+                                                                          >> 2U)))
+                                                                      ? 
+                                                                     vlSelf->top__DOT__ram__DOT__ram
+                                                                     [
+                                                                     (0x7fffeU 
+                                                                      & ((vlSelf->top__DOT__mem_reg_ram_addr 
+                                                                          - (IData)(0x80000000U)) 
+                                                                         >> 2U))]
+                                                                      : 0U))));
     vlSelf->top__DOT__src2_rs2 = ((0U == (0x1fU & (vlSelf->top__DOT__inst_id 
                                                    >> 0x14U)))
                                    ? 0ULL : ((((0x1fU 
@@ -373,20 +369,56 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                              [(0x1fU 
                                                & (vlSelf->top__DOT__inst_id 
                                                   >> 0x14U))]));
-    vlSelf->top__DOT__src1 = ((1U == (IData)(vlSelf->top__DOT__src1_sel_plus))
-                               ? ((1U == (IData)(vlSelf->top__DOT__exe_reg_src1_sel))
-                                   ? vlSelf->top__DOT__exe_reg_pc
-                                   : vlSelf->top__DOT__exe_reg_src1_rs1)
-                               : ((2U == (IData)(vlSelf->top__DOT__src1_sel_plus))
-                                   ? vlSelf->top__DOT__mem_reg_data_rd_in
-                                   : vlSelf->data_rd));
-    vlSelf->top__DOT__src2 = ((1U == (IData)(vlSelf->top__DOT__src2_sel_plus))
-                               ? ((1U == (IData)(vlSelf->top__DOT__exe_reg_src2_sel))
-                                   ? vlSelf->top__DOT__exe_reg_imm
-                                   : vlSelf->top__DOT__exe_reg_src2_rs2)
-                               : ((2U == (IData)(vlSelf->top__DOT__src2_sel_plus))
-                                   ? vlSelf->top__DOT__mem_reg_data_rd_in
-                                   : vlSelf->data_rd));
+    vlSelf->top__DOT__src1 = (((((- (QData)((IData)(
+                                                    (1U 
+                                                     & ((IData)(vlSelf->top__DOT__src1_sel_plus) 
+                                                        >> 2U))))) 
+                                 & vlSelf->data_rd) 
+                                | ((- (QData)((IData)(
+                                                      (1U 
+                                                       & ((IData)(vlSelf->top__DOT__src1_sel_plus) 
+                                                          >> 1U))))) 
+                                   & vlSelf->top__DOT__mem_reg_data_rd_in)) 
+                               | (((- (QData)((IData)(
+                                                      (1U 
+                                                       & (IData)(vlSelf->top__DOT__src1_sel_plus))))) 
+                                   & (- (QData)((IData)(
+                                                        (1U 
+                                                         & (IData)(vlSelf->top__DOT__exe_reg_src1_sel)))))) 
+                                  & vlSelf->top__DOT__exe_reg_pc)) 
+                              | (((- (QData)((IData)(
+                                                     (1U 
+                                                      & (IData)(vlSelf->top__DOT__src1_sel_plus))))) 
+                                  & (- (QData)((IData)(
+                                                       (1U 
+                                                        & ((IData)(vlSelf->top__DOT__exe_reg_src1_sel) 
+                                                           >> 1U)))))) 
+                                 & vlSelf->top__DOT__exe_reg_src1_rs1));
+    vlSelf->top__DOT__src2 = (((((- (QData)((IData)(
+                                                    (1U 
+                                                     & ((IData)(vlSelf->top__DOT__src2_sel_plus) 
+                                                        >> 2U))))) 
+                                 & vlSelf->data_rd) 
+                                | ((- (QData)((IData)(
+                                                      (1U 
+                                                       & ((IData)(vlSelf->top__DOT__src2_sel_plus) 
+                                                          >> 1U))))) 
+                                   & vlSelf->top__DOT__mem_reg_data_rd_in)) 
+                               | (((- (QData)((IData)(
+                                                      (1U 
+                                                       & (IData)(vlSelf->top__DOT__src2_sel_plus))))) 
+                                   & (- (QData)((IData)(
+                                                        (1U 
+                                                         & (IData)(vlSelf->top__DOT__exe_reg_src2_sel)))))) 
+                                  & vlSelf->top__DOT__exe_reg_imm)) 
+                              | (((- (QData)((IData)(
+                                                     (1U 
+                                                      & (IData)(vlSelf->top__DOT__src2_sel_plus))))) 
+                                  & (- (QData)((IData)(
+                                                       (1U 
+                                                        & ((IData)(vlSelf->top__DOT__exe_reg_src2_sel) 
+                                                           >> 1U)))))) 
+                                 & vlSelf->top__DOT__exe_reg_src2_rs2));
     vlSelf->top__DOT__imm = ((IData)(vlSelf->top__DOT__idu__DOT__TYPE_I)
                               ? (((- (QData)((IData)(
                                                      (vlSelf->top__DOT__inst_id 
@@ -506,10 +538,43 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                       == (IData)(vlSelf->top__DOT__wb_reg_rd)))
                                                    ? 8U
                                                    : 1U)));
-    vlSelf->top__DOT__data_ram__DOT__rdata_out = ((
-                                                   ((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
+    vlSelf->top__DOT__ram__DOT__rdata_out = ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
+                                               >> 5U) 
+                                              & (0U 
+                                                 == 
+                                                 (7U 
+                                                  & vlSelf->top__DOT__mem_reg_ram_addr)))
+                                              ? (((- (QData)((IData)(
+                                                                     (1U 
+                                                                      & (IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 7U)))))) 
+                                                  << 8U) 
+                                                 | (QData)((IData)(
+                                                                   (0xffU 
+                                                                    & (IData)(vlSelf->top__DOT__ram__DOT__rom)))))
+                                              : ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
+                                                   >> 5U) 
+                                                  & (1U 
+                                                     == 
+                                                     (7U 
+                                                      & vlSelf->top__DOT__mem_reg_ram_addr)))
+                                                  ? 
+                                                 (((- (QData)((IData)(
+                                                                      (1U 
+                                                                       & (IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0xfU)))))) 
+                                                   << 8U) 
+                                                  | (QData)((IData)(
+                                                                    (0xffU 
+                                                                     & (IData)(
+                                                                               (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 8U))))))
+                                                  : 
+                                                 ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                     >> 5U) 
-                                                   & (0U 
+                                                   & (2U 
                                                       == 
                                                       (7U 
                                                        & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -517,16 +582,18 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                   (((- (QData)((IData)(
                                                                        (1U 
                                                                         & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 7U)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x17U)))))) 
                                                     << 8U) 
                                                    | (QData)((IData)(
                                                                      (0xffU 
-                                                                      & (IData)(vlSelf->top__DOT__data_ram__DOT__rom)))))
+                                                                      & (IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x10U))))))
                                                    : 
                                                   ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                      >> 5U) 
-                                                    & (1U 
+                                                    & (3U 
                                                        == 
                                                        (7U 
                                                         & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -534,18 +601,18 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                    (((- (QData)((IData)(
                                                                         (1U 
                                                                          & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0xfU)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x1fU)))))) 
                                                      << 8U) 
                                                     | (QData)((IData)(
                                                                       (0xffU 
                                                                        & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 8U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x18U))))))
                                                     : 
                                                    ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                       >> 5U) 
-                                                     & (2U 
+                                                     & (4U 
                                                         == 
                                                         (7U 
                                                          & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -553,18 +620,18 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                     (((- (QData)((IData)(
                                                                          (1U 
                                                                           & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x17U)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x27U)))))) 
                                                       << 8U) 
                                                      | (QData)((IData)(
                                                                        (0xffU 
                                                                         & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x10U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x20U))))))
                                                      : 
                                                     ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                        >> 5U) 
-                                                      & (3U 
+                                                      & (5U 
                                                          == 
                                                          (7U 
                                                           & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -572,18 +639,18 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                      (((- (QData)((IData)(
                                                                           (1U 
                                                                            & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x1fU)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x2fU)))))) 
                                                        << 8U) 
                                                       | (QData)((IData)(
                                                                         (0xffU 
                                                                          & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x18U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x28U))))))
                                                       : 
                                                      ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                         >> 5U) 
-                                                       & (4U 
+                                                       & (6U 
                                                           == 
                                                           (7U 
                                                            & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -591,18 +658,18 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                       (((- (QData)((IData)(
                                                                            (1U 
                                                                             & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x27U)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x37U)))))) 
                                                         << 8U) 
                                                        | (QData)((IData)(
                                                                          (0xffU 
                                                                           & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x20U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x30U))))))
                                                        : 
                                                       ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                          >> 5U) 
-                                                        & (5U 
+                                                        & (7U 
                                                            == 
                                                            (7U 
                                                             & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -610,150 +677,148 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                        (((- (QData)((IData)(
                                                                             (1U 
                                                                              & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x2fU)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x3fU)))))) 
                                                          << 8U) 
                                                         | (QData)((IData)(
                                                                           (0xffU 
                                                                            & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x28U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x38U))))))
                                                         : 
                                                        ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                          >> 5U) 
-                                                         & (6U 
+                                                          >> 4U) 
+                                                         & (0U 
                                                             == 
                                                             (7U 
                                                              & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                         ? 
-                                                        (((- (QData)((IData)(
-                                                                             (1U 
-                                                                              & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x37U)))))) 
-                                                          << 8U) 
-                                                         | (QData)((IData)(
+                                                         ? (QData)((IData)(
                                                                            (0xffU 
-                                                                            & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x30U))))))
+                                                                            & (IData)(vlSelf->top__DOT__ram__DOT__rom))))
                                                          : 
                                                         ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                           >> 5U) 
-                                                          & (7U 
+                                                           >> 4U) 
+                                                          & (1U 
                                                              == 
                                                              (7U 
                                                               & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                          ? 
-                                                         (((- (QData)((IData)(
-                                                                              (1U 
-                                                                               & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x3fU)))))) 
-                                                           << 8U) 
-                                                          | (QData)((IData)(
+                                                          ? (QData)((IData)(
                                                                             (0xffU 
                                                                              & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x38U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 8U)))))
                                                           : 
                                                          ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                             >> 4U) 
-                                                           & (0U 
+                                                           & (2U 
                                                               == 
                                                               (7U 
                                                                & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                            ? (QData)((IData)(
                                                                              (0xffU 
-                                                                              & (IData)(vlSelf->top__DOT__data_ram__DOT__rom))))
+                                                                              & (IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x10U)))))
                                                            : 
                                                           ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                              >> 4U) 
-                                                            & (1U 
+                                                            & (3U 
                                                                == 
                                                                (7U 
                                                                 & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                             ? (QData)((IData)(
                                                                               (0xffU 
                                                                                & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 8U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x18U)))))
                                                             : 
                                                            ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                               >> 4U) 
-                                                             & (2U 
+                                                             & (4U 
                                                                 == 
                                                                 (7U 
                                                                  & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                              ? (QData)((IData)(
                                                                                (0xffU 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x10U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x20U)))))
                                                              : 
                                                             ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                >> 4U) 
-                                                              & (3U 
+                                                              & (5U 
                                                                  == 
                                                                  (7U 
                                                                   & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                               ? (QData)((IData)(
                                                                                 (0xffU 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x18U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x28U)))))
                                                               : 
                                                              ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                 >> 4U) 
-                                                               & (4U 
+                                                               & (6U 
                                                                   == 
                                                                   (7U 
                                                                    & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                                ? (QData)((IData)(
                                                                                 (0xffU 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x20U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x30U)))))
                                                                : 
                                                               ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                  >> 4U) 
-                                                                & (5U 
+                                                                & (7U 
                                                                    == 
                                                                    (7U 
                                                                     & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                                 ? (QData)((IData)(
                                                                                 (0xffU 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x28U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x38U)))))
                                                                 : 
                                                                ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                  >> 4U) 
-                                                                 & (6U 
+                                                                  >> 3U) 
+                                                                 & (0U 
                                                                     == 
                                                                     (7U 
                                                                      & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                 ? (QData)((IData)(
-                                                                                (0xffU 
+                                                                 ? 
+                                                                (((- (QData)((IData)(
+                                                                                (1U 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x30U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0xfU)))))) 
+                                                                  << 0x10U) 
+                                                                 | (QData)((IData)(
+                                                                                (0xffffU 
+                                                                                & (IData)(vlSelf->top__DOT__ram__DOT__rom)))))
                                                                  : 
                                                                 ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                   >> 4U) 
-                                                                  & (7U 
+                                                                   >> 3U) 
+                                                                  & (2U 
                                                                      == 
                                                                      (7U 
                                                                       & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                  ? (QData)((IData)(
-                                                                                (0xffU 
+                                                                  ? 
+                                                                 (((- (QData)((IData)(
+                                                                                (1U 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x38U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x1fU)))))) 
+                                                                   << 0x10U) 
+                                                                  | (QData)((IData)(
+                                                                                (0xffffU 
+                                                                                & (IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x10U))))))
                                                                   : 
                                                                  ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                     >> 3U) 
-                                                                   & (0U 
+                                                                   & (4U 
                                                                       == 
                                                                       (7U 
                                                                        & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -761,16 +826,18 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                                   (((- (QData)((IData)(
                                                                                 (1U 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0xfU)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x2fU)))))) 
                                                                     << 0x10U) 
                                                                    | (QData)((IData)(
                                                                                 (0xffffU 
-                                                                                & (IData)(vlSelf->top__DOT__data_ram__DOT__rom)))))
+                                                                                & (IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x20U))))))
                                                                    : 
                                                                   ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                      >> 3U) 
-                                                                    & (2U 
+                                                                    & (6U 
                                                                        == 
                                                                        (7U 
                                                                         & vlSelf->top__DOT__mem_reg_ram_addr)))
@@ -778,149 +845,111 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                                    (((- (QData)((IData)(
                                                                                 (1U 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x1fU)))))) 
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x3fU)))))) 
                                                                      << 0x10U) 
                                                                     | (QData)((IData)(
                                                                                 (0xffffU 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x10U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x30U))))))
                                                                     : 
                                                                    ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                      >> 3U) 
-                                                                     & (4U 
+                                                                      >> 2U) 
+                                                                     & (0U 
                                                                         == 
                                                                         (7U 
                                                                          & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                     ? 
-                                                                    (((- (QData)((IData)(
-                                                                                (1U 
-                                                                                & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x2fU)))))) 
-                                                                      << 0x10U) 
-                                                                     | (QData)((IData)(
+                                                                     ? (QData)((IData)(
                                                                                 (0xffffU 
-                                                                                & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x20U))))))
+                                                                                & (IData)(vlSelf->top__DOT__ram__DOT__rom))))
                                                                      : 
                                                                     ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                       >> 3U) 
-                                                                      & (6U 
+                                                                       >> 2U) 
+                                                                      & (2U 
                                                                          == 
                                                                          (7U 
                                                                           & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                      ? 
-                                                                     (((- (QData)((IData)(
-                                                                                (1U 
-                                                                                & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x3fU)))))) 
-                                                                       << 0x10U) 
-                                                                      | (QData)((IData)(
+                                                                      ? (QData)((IData)(
                                                                                 (0xffffU 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x30U))))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x10U)))))
                                                                       : 
                                                                      ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                         >> 2U) 
-                                                                       & (0U 
+                                                                       & (4U 
                                                                           == 
                                                                           (7U 
                                                                            & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                                        ? (QData)((IData)(
                                                                                 (0xffffU 
-                                                                                & (IData)(vlSelf->top__DOT__data_ram__DOT__rom))))
+                                                                                & (IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x20U)))))
                                                                        : 
                                                                       ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                          >> 2U) 
-                                                                        & (2U 
+                                                                        & (6U 
                                                                            == 
                                                                            (7U 
                                                                             & vlSelf->top__DOT__mem_reg_ram_addr)))
                                                                         ? (QData)((IData)(
                                                                                 (0xffffU 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x10U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x30U)))))
                                                                         : 
                                                                        ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                          >> 2U) 
-                                                                         & (4U 
+                                                                          >> 1U) 
+                                                                         & (0U 
                                                                             == 
                                                                             (7U 
                                                                              & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                         ? (QData)((IData)(
-                                                                                (0xffffU 
+                                                                         ? 
+                                                                        (((QData)((IData)(
+                                                                                (- (IData)(
+                                                                                (1U 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x20U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x1fU))))))) 
+                                                                          << 0x20U) 
+                                                                         | (QData)((IData)(vlSelf->top__DOT__ram__DOT__rom)))
                                                                          : 
                                                                         ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                           >> 2U) 
-                                                                          & (6U 
+                                                                           >> 1U) 
+                                                                          & (4U 
                                                                              == 
                                                                              (7U 
                                                                               & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                          ? (QData)((IData)(
-                                                                                (0xffffU 
+                                                                          ? 
+                                                                         (((QData)((IData)(
+                                                                                (- (IData)(
+                                                                                (1U 
                                                                                 & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x30U)))))
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x3fU))))))) 
+                                                                           << 0x20U) 
+                                                                          | (QData)((IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
+                                                                                >> 0x20U))))
                                                                           : 
-                                                                         ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                            >> 1U) 
+                                                                         (((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                            & (0U 
                                                                               == 
                                                                               (7U 
                                                                                & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                           ? 
-                                                                          (((QData)((IData)(
-                                                                                (- (IData)(
-                                                                                (1U 
-                                                                                & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x1fU))))))) 
-                                                                            << 0x20U) 
-                                                                           | (QData)((IData)(vlSelf->top__DOT__data_ram__DOT__rom)))
+                                                                           ? (QData)((IData)(vlSelf->top__DOT__ram__DOT__rom))
                                                                            : 
-                                                                          ((((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                             >> 1U) 
+                                                                          (((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
                                                                             & (4U 
                                                                                == 
                                                                                (7U 
                                                                                 & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                            ? 
-                                                                           (((QData)((IData)(
-                                                                                (- (IData)(
-                                                                                (1U 
-                                                                                & (IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x3fU))))))) 
-                                                                             << 0x20U) 
-                                                                            | (QData)((IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
-                                                                                >> 0x20U))))
-                                                                            : 
-                                                                           (((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                             & (0U 
-                                                                                == 
-                                                                                (7U 
-                                                                                & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                             ? (QData)((IData)(vlSelf->top__DOT__data_ram__DOT__rom))
-                                                                             : 
-                                                                            (((IData)(vlSelf->top__DOT__mem_reg_l_bhw) 
-                                                                              & (4U 
-                                                                                == 
-                                                                                (7U 
-                                                                                & vlSelf->top__DOT__mem_reg_ram_addr)))
-                                                                              ? (QData)((IData)(
-                                                                                (vlSelf->top__DOT__data_ram__DOT__rom 
+                                                                            ? (QData)((IData)(
+                                                                                (vlSelf->top__DOT__ram__DOT__rom 
                                                                                 >> 0x20U)))
-                                                                              : vlSelf->top__DOT__data_ram__DOT__rom))))))))))))))))))))))))))));
+                                                                            : vlSelf->top__DOT__ram__DOT__rom))))))))))))))))))))))))))));
     vlSelf->top__DOT__alu__DOT__sll_w1_result = (vlSelf->top__DOT__src1 
                                                  << 
                                                  (0x1fU 
@@ -1355,59 +1384,67 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                                << 0x20U) 
                                               | (QData)((IData)(vlSelf->top__DOT__alu__DOT__rem_d_result)))
                                            : vlSelf->top__DOT__alu__DOT__rem_d_result)));
-    vlSelf->top__DOT__b_src2 = ((1U == (IData)(vlSelf->top__DOT__b_check_rs2_sel))
-                                 ? vlSelf->top__DOT__src2_rs2
-                                 : ((2U == (IData)(vlSelf->top__DOT__b_check_rs2_sel))
-                                     ? vlSelf->top__DOT__data_rd_in
-                                     : ((4U == (IData)(vlSelf->top__DOT__b_check_rs2_sel))
-                                         ? vlSelf->top__DOT__mem_reg_data_rd_in
-                                         : vlSelf->data_rd)));
-    vlSelf->top__DOT__pc_src1 = ((1U == (IData)(vlSelf->top__DOT__pc_add_rs1_sel))
-                                  ? vlSelf->top__DOT__src1_rs1
-                                  : ((2U == (IData)(vlSelf->top__DOT__pc_add_rs1_sel))
-                                      ? vlSelf->top__DOT__data_rd_in
-                                      : ((4U == (IData)(vlSelf->top__DOT__pc_add_rs1_sel))
-                                          ? vlSelf->top__DOT__mem_reg_data_rd_in
-                                          : vlSelf->data_rd)));
+    vlSelf->top__DOT__pc_sel_check__DOT__b_src2 = (
+                                                   (1U 
+                                                    == (IData)(vlSelf->top__DOT__b_check_rs2_sel))
+                                                    ? vlSelf->top__DOT__src2_rs2
+                                                    : 
+                                                   ((2U 
+                                                     == (IData)(vlSelf->top__DOT__b_check_rs2_sel))
+                                                     ? vlSelf->top__DOT__data_rd_in
+                                                     : 
+                                                    ((4U 
+                                                      == (IData)(vlSelf->top__DOT__b_check_rs2_sel))
+                                                      ? vlSelf->top__DOT__mem_reg_data_rd_in
+                                                      : vlSelf->data_rd)));
+    vlSelf->top__DOT__pc_sel_check__DOT__pc_src1 = 
+        ((1U == (IData)(vlSelf->top__DOT__pc_add_rs1_sel))
+          ? vlSelf->top__DOT__src1_rs1 : ((2U == (IData)(vlSelf->top__DOT__pc_add_rs1_sel))
+                                           ? vlSelf->top__DOT__data_rd_in
+                                           : ((4U == (IData)(vlSelf->top__DOT__pc_add_rs1_sel))
+                                               ? vlSelf->top__DOT__mem_reg_data_rd_in
+                                               : vlSelf->data_rd)));
     __Vtemp26[0U] = 1U;
     __Vtemp26[1U] = 0U;
     __Vtemp26[2U] = 0U;
-    VL_EXTEND_WQ(65,64, __Vtemp27, vlSelf->top__DOT__pc_src1);
-    VL_EXTEND_WQ(65,64, __Vtemp28, (~ vlSelf->top__DOT__b_src2));
+    VL_EXTEND_WQ(65,64, __Vtemp27, vlSelf->top__DOT__pc_sel_check__DOT__pc_src1);
+    VL_EXTEND_WQ(65,64, __Vtemp28, (~ vlSelf->top__DOT__pc_sel_check__DOT__b_src2));
     VL_ADD_W(3, __Vtemp29, __Vtemp27, __Vtemp28);
     VL_ADD_W(3, __Vtemp30, __Vtemp26, __Vtemp29);
-    vlSelf->top__DOT__b_check_out__DOT__data_cout = 
-        (1U & __Vtemp30[2U]);
-    vlSelf->top__DOT__b_check_out__DOT__beq_check = 
-        (vlSelf->top__DOT__pc_src1 == vlSelf->top__DOT__b_src2);
-    vlSelf->top__DOT__b_check_out__DOT__blt_check = 
-        (1U & (((IData)((vlSelf->top__DOT__pc_src1 
-                         >> 0x3fU)) & (~ (IData)((vlSelf->top__DOT__b_src2 
-                                                  >> 0x3fU)))) 
-               | ((~ ((IData)((vlSelf->top__DOT__pc_src1 
-                               >> 0x3fU)) ^ (IData)(
-                                                    (vlSelf->top__DOT__b_src2 
-                                                     >> 0x3fU)))) 
-                  & (IData)(((1ULL + (vlSelf->top__DOT__pc_src1 
-                                      + (~ vlSelf->top__DOT__b_src2))) 
-                             >> 0x3fU)))));
+    vlSelf->top__DOT__pc_sel_check__DOT__data_cout 
+        = (1U & __Vtemp30[2U]);
+    vlSelf->top__DOT__pc_sel_check__DOT__beq_check 
+        = (vlSelf->top__DOT__pc_sel_check__DOT__pc_src1 
+           == vlSelf->top__DOT__pc_sel_check__DOT__b_src2);
+    vlSelf->top__DOT__pc_sel_check__DOT__blt_check 
+        = (1U & (((IData)((vlSelf->top__DOT__pc_sel_check__DOT__pc_src1 
+                           >> 0x3fU)) & (~ (IData)(
+                                                   (vlSelf->top__DOT__pc_sel_check__DOT__b_src2 
+                                                    >> 0x3fU)))) 
+                 | ((~ ((IData)((vlSelf->top__DOT__pc_sel_check__DOT__pc_src1 
+                                 >> 0x3fU)) ^ (IData)(
+                                                      (vlSelf->top__DOT__pc_sel_check__DOT__b_src2 
+                                                       >> 0x3fU)))) 
+                    & (IData)(((1ULL + (vlSelf->top__DOT__pc_sel_check__DOT__pc_src1 
+                                        + (~ vlSelf->top__DOT__pc_sel_check__DOT__b_src2))) 
+                               >> 0x3fU)))));
     vlSelf->top__DOT__pc_sel_out = ((1U & ((((((((IData)(vlSelf->top__DOT__b_check) 
                                                  >> 5U) 
-                                                & (IData)(vlSelf->top__DOT__b_check_out__DOT__beq_check)) 
+                                                & (IData)(vlSelf->top__DOT__pc_sel_check__DOT__beq_check)) 
                                                | (((IData)(vlSelf->top__DOT__b_check) 
                                                    >> 4U) 
-                                                  & (~ (IData)(vlSelf->top__DOT__b_check_out__DOT__beq_check)))) 
+                                                  & (~ (IData)(vlSelf->top__DOT__pc_sel_check__DOT__beq_check)))) 
                                               | (((IData)(vlSelf->top__DOT__b_check) 
                                                   >> 3U) 
-                                                 & (IData)(vlSelf->top__DOT__b_check_out__DOT__blt_check))) 
+                                                 & (IData)(vlSelf->top__DOT__pc_sel_check__DOT__blt_check))) 
                                              | (((IData)(vlSelf->top__DOT__b_check) 
                                                  >> 2U) 
-                                                & (~ (IData)(vlSelf->top__DOT__b_check_out__DOT__blt_check)))) 
+                                                & (~ (IData)(vlSelf->top__DOT__pc_sel_check__DOT__blt_check)))) 
                                             | (((IData)(vlSelf->top__DOT__b_check) 
                                                 >> 1U) 
-                                               & (~ (IData)(vlSelf->top__DOT__b_check_out__DOT__data_cout)))) 
+                                               & (~ (IData)(vlSelf->top__DOT__pc_sel_check__DOT__data_cout)))) 
                                            | ((IData)(vlSelf->top__DOT__b_check) 
-                                              & (IData)(vlSelf->top__DOT__b_check_out__DOT__data_cout))))
+                                              & (IData)(vlSelf->top__DOT__pc_sel_check__DOT__data_cout))))
                                      ? 2U : ((IData)(vlSelf->top__DOT__idu__DOT__inst_jalr)
                                               ? 4U : 
                                              ((0x6fU 
@@ -1421,7 +1458,7 @@ void Vtop___024root___settle__TOP__3(Vtop___024root* vlSelf) {
                                        ? (vlSelf->top__DOT__id_reg_pc 
                                           + vlSelf->top__DOT__imm)
                                        : (0xfffffffffffffffeULL 
-                                          & (vlSelf->top__DOT__pc_src1 
+                                          & (vlSelf->top__DOT__pc_sel_check__DOT__pc_src1 
                                              + vlSelf->top__DOT__imm))));
 }
 
@@ -1430,8 +1467,8 @@ void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial\n"); );
     // Body
-    Vtop___024root___initial__TOP__1(vlSelf);
     vlSelf->__Vclklast__TOP__clk = vlSelf->clk;
+    Vtop___024root___initial__TOP__2(vlSelf);
 }
 
 void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
@@ -1504,6 +1541,8 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__imm = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__b_src2 = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__pc_src1 = VL_RAND_RESET_Q(64);
+    vlSelf->top__DOT__one_src1 = VL_RAND_RESET_Q(64);
+    vlSelf->top__DOT__one_src2 = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__if_pc = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__exe_reg_src1_rs1 = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__exe_reg_src1 = VL_RAND_RESET_Q(64);
@@ -1532,9 +1571,6 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__src1 = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__src2 = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__data_rd_in = VL_RAND_RESET_Q(64);
-    for (int __Vi0=0; __Vi0<65536; ++__Vi0) {
-        vlSelf->top__DOT__inst_ram__DOT__rom[__Vi0] = VL_RAND_RESET_I(32);
-    }
     vlSelf->top__DOT__idu__DOT__TYPE_I = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__idu__DOT__TYPE_U = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__idu__DOT__inst_remw = VL_RAND_RESET_I(1);
@@ -1560,9 +1596,11 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     for (int __Vi0=0; __Vi0<32; ++__Vi0) {
         vlSelf->top__DOT__common_reg__DOT__reg_com[__Vi0] = VL_RAND_RESET_Q(64);
     }
-    vlSelf->top__DOT__b_check_out__DOT__beq_check = VL_RAND_RESET_I(1);
-    vlSelf->top__DOT__b_check_out__DOT__blt_check = VL_RAND_RESET_I(1);
-    vlSelf->top__DOT__b_check_out__DOT__data_cout = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__pc_sel_check__DOT__pc_src1 = VL_RAND_RESET_Q(64);
+    vlSelf->top__DOT__pc_sel_check__DOT__b_src2 = VL_RAND_RESET_Q(64);
+    vlSelf->top__DOT__pc_sel_check__DOT__beq_check = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__pc_sel_check__DOT__blt_check = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__pc_sel_check__DOT__data_cout = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__alu__DOT__srl_w1_result = VL_RAND_RESET_I(32);
     vlSelf->top__DOT__alu__DOT__sra_w1_result = VL_RAND_RESET_I(32);
     vlSelf->top__DOT__alu__DOT__div_w1_result = VL_RAND_RESET_I(32);
@@ -1576,27 +1614,27 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__alu__DOT__data_b = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__alu__DOT__data_result = VL_RAND_RESET_Q(64);
     vlSelf->top__DOT__alu__DOT__data_cin = VL_RAND_RESET_I(1);
-    vlSelf->top__DOT__data_ram__DOT__rdata_out = VL_RAND_RESET_Q(64);
+    vlSelf->top__DOT__ram__DOT__rdata_out = VL_RAND_RESET_Q(64);
     for (int __Vi0=0; __Vi0<400001; ++__Vi0) {
-        vlSelf->top__DOT__data_ram__DOT__ram[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->top__DOT__ram__DOT__ram[__Vi0] = VL_RAND_RESET_I(32);
     }
-    vlSelf->top__DOT__data_ram__DOT__rom = VL_RAND_RESET_Q(64);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound1 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound2 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound3 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound4 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound5 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound6 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound7 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound8 = VL_RAND_RESET_I(8);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound9 = VL_RAND_RESET_I(16);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound10 = VL_RAND_RESET_I(16);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound11 = VL_RAND_RESET_I(16);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound12 = VL_RAND_RESET_I(16);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound13 = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound14 = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound15 = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__data_ram__DOT____Vlvbound16 = VL_RAND_RESET_I(32);
+    vlSelf->top__DOT__ram__DOT__rom = VL_RAND_RESET_Q(64);
+    vlSelf->top__DOT__ram__DOT____Vlvbound1 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound2 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound3 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound4 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound5 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound6 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound7 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound8 = VL_RAND_RESET_I(8);
+    vlSelf->top__DOT__ram__DOT____Vlvbound9 = VL_RAND_RESET_I(16);
+    vlSelf->top__DOT__ram__DOT____Vlvbound10 = VL_RAND_RESET_I(16);
+    vlSelf->top__DOT__ram__DOT____Vlvbound11 = VL_RAND_RESET_I(16);
+    vlSelf->top__DOT__ram__DOT____Vlvbound12 = VL_RAND_RESET_I(16);
+    vlSelf->top__DOT__ram__DOT____Vlvbound13 = VL_RAND_RESET_I(32);
+    vlSelf->top__DOT__ram__DOT____Vlvbound14 = VL_RAND_RESET_I(32);
+    vlSelf->top__DOT__ram__DOT____Vlvbound15 = VL_RAND_RESET_I(32);
+    vlSelf->top__DOT__ram__DOT____Vlvbound16 = VL_RAND_RESET_I(32);
     vlSelf->top__DOT__ebreak_list__DOT__op_1 = VL_RAND_RESET_I(15);
     vlSelf->top__DOT__ebreak_list__DOT__ebreak_1 = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__ebreak_list__DOT__inst_1 = VL_RAND_RESET_I(32);

@@ -134,20 +134,20 @@ module ysyx_22040125_IDU (
 
     assign op = (inst_add || inst_addw || inst_addi || inst_addiw || l_check || TYPE_S || inst_auipc || TYPE_B)?     `OP_ADD  :
            (inst_sub || inst_subw)?  `OP_SUB  :
-           op_sll?              `OP_SLL  :
-           op_slt?              `OP_SLT  :
-           op_sltu?             `OP_SLTU :
-           op_xor?              `OP_XOR  :
-           op_srl?              `OP_SRL  :
-           op_sra?              `OP_SRA  :
-           op_or?               `OP_OR   :
-           op_and?              `OP_AND  :
-           inst_lui?            `OP_LUI  :
-           inst_jal?            `OP_JAL  :
-           inst_jalr?           `OP_JAL  :
-           op_mul?              `OP_MUL  :
-           op_div?              `OP_DIV  :
-           op_rem?              `OP_REM  :0;
+                op_sll?              `OP_SLL  :
+                op_slt?              `OP_SLT  :
+                op_sltu?             `OP_SLTU :
+                op_xor?              `OP_XOR  :
+                op_srl?              `OP_SRL  :
+                op_sra?              `OP_SRA  :
+                op_or?               `OP_OR   :
+                op_and?              `OP_AND  :
+                inst_lui?            `OP_LUI  :
+                inst_jal?            `OP_JAL  :
+                inst_jalr?           `OP_JAL  :
+                op_mul?              `OP_MUL  :
+                op_div?              `OP_DIV  :
+                op_rem?              `OP_REM  :0;
 
     assign src1_sel = (TYPE_J || inst_jalr || inst_auipc)? 2'b01: 2'b10;
     assign src2_sel = (TYPE_J || TYPE_U || TYPE_I)? 2'b01: 2'b10;
