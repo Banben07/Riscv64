@@ -21,14 +21,15 @@ VL_MODULE(Vtop___024root) {
     // PORTS
     VL_IN8(clk,0,0);
     VL_IN8(rst,0,0);
-    VL_OUT64(data_rd,63,0);
-    VL_OUT64(outdata,63,0);
+    VL_OUT8(success,0,0);
 
     // LOCAL SIGNALS
     // Anonymous structures to workaround compiler member-count bugs
     struct {
+        CData/*0:0*/ top__DOT__stall_l;
+        CData/*0:0*/ top__DOT__stall_if;
+        CData/*0:0*/ top__DOT__stall_mem;
         CData/*0:0*/ top__DOT__exe_reg_w_check;
-        CData/*0:0*/ top__DOT__stall_control;
         CData/*0:0*/ top__DOT__exe_reg_data_ren;
         CData/*0:0*/ top__DOT__mem_reg_data_ren;
         CData/*0:0*/ top__DOT__ebreak_out;
@@ -42,6 +43,7 @@ VL_MODULE(Vtop___024root) {
         CData/*1:0*/ top__DOT__exe_reg_src1_sel;
         CData/*1:0*/ top__DOT__exe_reg_src2_sel;
         CData/*1:0*/ top__DOT__exe_reg_load_sel;
+        CData/*2:0*/ top__DOT__stall;
         CData/*2:0*/ top__DOT__mem_reg_s_bhwd;
         CData/*2:0*/ top__DOT__exe_reg_s_bhwd;
         CData/*2:0*/ top__DOT__pc_sel_out;
@@ -88,13 +90,11 @@ VL_MODULE(Vtop___024root) {
         CData/*0:0*/ top__DOT__pc_sel_check__DOT__data_cout;
         CData/*0:0*/ top__DOT__alu__DOT__data_cin;
         CData/*0:0*/ top__DOT__ebreak_list__DOT__ebreak_1;
-        SData/*14:0*/ top__DOT__op;
-        SData/*14:0*/ top__DOT__op_out;
-        SData/*14:0*/ top__DOT__exe_reg_op;
     };
     struct {
+        SData/*14:0*/ top__DOT__exe_reg_op;
+        SData/*15:0*/ top__DOT__op;
         SData/*15:0*/ top__DOT__inst_addr;
-        SData/*14:0*/ top__DOT__ebreak_list__DOT__op_1;
         IData/*31:0*/ top__DOT__inst;
         IData/*31:0*/ top__DOT__mem_reg_ram_addr;
         IData/*31:0*/ top__DOT__inst_id;
@@ -103,8 +103,8 @@ VL_MODULE(Vtop___024root) {
         IData/*31:0*/ top__DOT__alu__DOT__sra_w1_result;
         IData/*31:0*/ top__DOT__alu__DOT__div_w1_result;
         IData/*31:0*/ top__DOT__alu__DOT__rem_w1_result;
-        IData/*31:0*/ top__DOT__ebreak_list__DOT__inst_1;
         QData/*63:0*/ top__DOT__imm;
+        QData/*63:0*/ top__DOT__data_rd;
         QData/*63:0*/ top__DOT__b_src2;
         QData/*63:0*/ top__DOT__pc_src1;
         QData/*63:0*/ top__DOT__one_src1;

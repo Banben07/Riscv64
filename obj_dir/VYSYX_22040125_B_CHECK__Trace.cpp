@@ -37,12 +37,12 @@ void VYSYX_22040125_B_CHECK___024root__traceChgSub0(VYSYX_22040125_B_CHECK___024
             tracep->chgBit(oldp+0,(((0x23U == (0x7fU 
                                                & vlSelf->top__DOT__inst_id))
                                      ? 1U : 0U)));
-            tracep->chgBit(oldp+1,(((IData)(vlSelf->top__DOT__stall_control)
+            tracep->chgBit(oldp+1,(((IData)(vlSelf->top__DOT__stall_id)
                                      ? 0U : ((0x23U 
                                               == (0x7fU 
                                                   & vlSelf->top__DOT__inst_id))
                                               ? 1U : 0U))));
-            tracep->chgBit(oldp+2,(((IData)(vlSelf->top__DOT__stall_control)
+            tracep->chgBit(oldp+2,(((IData)(vlSelf->top__DOT__stall_id)
                                      ? 0U : (((((0x33U 
                                                  == 
                                                  (0x7fU 
@@ -54,7 +54,7 @@ void VYSYX_22040125_B_CHECK___024root__traceChgSub0(VYSYX_22040125_B_CHECK___024
                                                  (0x7fU 
                                                   & vlSelf->top__DOT__inst_id)))
                                               ? 1U : 0U))));
-            tracep->chgBit(oldp+3,(vlSelf->top__DOT__stall_control));
+            tracep->chgBit(oldp+3,(vlSelf->top__DOT__stall_id));
             tracep->chgBit(oldp+4,((((((((IData)(vlSelf->top__DOT__idu__DOT__inst_lb) 
                                          | (IData)(vlSelf->top__DOT__idu__DOT__inst_lh)) 
                                         | (IData)(vlSelf->top__DOT__idu__DOT__inst_lw)) 

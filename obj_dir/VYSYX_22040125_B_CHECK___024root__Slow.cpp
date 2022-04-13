@@ -404,7 +404,7 @@ void VYSYX_22040125_B_CHECK___024root___settle__TOP__3(VYSYX_22040125_B_CHECK___
                                                                ((IData)(vlSelf->top__DOT__idu__DOT__inst_jalr)
                                                                  ? 0x800U
                                                                  : 0U))))))))))))))))));
-    vlSelf->top__DOT__stall_control = (((IData)(vlSelf->top__DOT__exe_reg_data_ren) 
+    vlSelf->top__DOT__stall_id = (((IData)(vlSelf->top__DOT__exe_reg_data_ren) 
                                         & (((IData)(vlSelf->top__DOT__exe_reg_rd) 
                                             == (IData)(vlSelf->top__DOT__rs1)) 
                                            | ((IData)(vlSelf->top__DOT__exe_reg_rd) 
@@ -647,7 +647,7 @@ void VYSYX_22040125_B_CHECK___024root___ctor_var_reset(VYSYX_22040125_B_CHECK___
     vlSelf->clk = VL_RAND_RESET_I(1);
     vlSelf->rst = VL_RAND_RESET_I(1);
     vlSelf->data_rd = VL_RAND_RESET_Q(64);
-    vlSelf->top__DOT__stall_control = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__stall_id = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__exe_reg_data_ren = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__mem_reg_data_ren = VL_RAND_RESET_I(1);
     vlSelf->top__DOT__ebreak_out = VL_RAND_RESET_I(1);

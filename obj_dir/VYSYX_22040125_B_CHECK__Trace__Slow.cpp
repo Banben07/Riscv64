@@ -31,7 +31,7 @@ void VYSYX_22040125_B_CHECK___024root__traceInitSub0(VYSYX_22040125_B_CHECK___02
         tracep->declBit(c+1,"top data_wen", false,-1);
         tracep->declBit(c+2,"top data_wen_out", false,-1);
         tracep->declBit(c+3,"top reg_wen_out", false,-1);
-        tracep->declBit(c+4,"top stall_control", false,-1);
+        tracep->declBit(c+4,"top stall_id", false,-1);
         tracep->declBit(c+5,"top data_ren", false,-1);
         tracep->declBit(c+6,"top exe_reg_data_ren", false,-1);
         tracep->declBit(c+7,"top mem_reg_data_ren", false,-1);
@@ -119,7 +119,7 @@ void VYSYX_22040125_B_CHECK___024root__traceInitSub0(VYSYX_22040125_B_CHECK___02
         tracep->declBus(c+33,"top Hazard_unit rs2", false,-1, 4,0);
         tracep->declBus(c+38,"top Hazard_unit exe_reg_rd", false,-1, 4,0);
         tracep->declBit(c+6,"top Hazard_unit exe_reg_data_ren", false,-1);
-        tracep->declBit(c+4,"top Hazard_unit stall_control", false,-1);
+        tracep->declBit(c+4,"top Hazard_unit stall_id", false,-1);
         tracep->declBit(c+8,"top Hazard_unit IF_Flush", false,-1);
         tracep->declBus(c+34,"top Foward_unit exe_reg_rs1", false,-1, 4,0);
         tracep->declBus(c+35,"top Foward_unit exe_reg_rs2", false,-1, 4,0);
@@ -155,10 +155,10 @@ void VYSYX_22040125_B_CHECK___024root__traceInitSub0(VYSYX_22040125_B_CHECK___02
         tracep->declBit(c+284,"top id_reg rst", false,-1);
         tracep->declBit(c+4,"top id_reg stall", false,-1);
         tracep->declBit(c+8,"top id_reg IF_Flush", false,-1);
-        tracep->declBus(c+45,"top id_reg id_reg_in0", false,-1, 31,0);
-        tracep->declQuad(c+60,"top id_reg id_reg_in1", false,-1, 63,0);
-        tracep->declBus(c+48,"top id_reg id_reg_out0", false,-1, 31,0);
-        tracep->declQuad(c+84,"top id_reg id_reg_out1", false,-1, 63,0);
+        tracep->declBus(c+45,"top id_reg inst", false,-1, 31,0);
+        tracep->declQuad(c+60,"top id_reg if_pc", false,-1, 63,0);
+        tracep->declBus(c+48,"top id_reg id_inst_id", false,-1, 31,0);
+        tracep->declQuad(c+84,"top id_reg id_reg_pc", false,-1, 63,0);
         tracep->declBus(c+48,"top idu inst", false,-1, 31,0);
         tracep->declQuad(c+50,"top idu imm", false,-1, 63,0);
         tracep->declBus(c+41,"top idu op", false,-1, 11,0);
@@ -274,20 +274,20 @@ void VYSYX_22040125_B_CHECK___024root__traceInitSub0(VYSYX_22040125_B_CHECK___02
         tracep->declQuad(c+98,"top pc_add cpu_dnpc_in2", false,-1, 63,0);
         tracep->declBit(c+283,"top exe_reg clk", false,-1);
         tracep->declBit(c+284,"top exe_reg rst", false,-1);
-        tracep->declQuad(c+84,"top exe_reg exe_reg_in0", false,-1, 63,0);
-        tracep->declBus(c+41,"top exe_reg exe_reg_in1", false,-1, 11,0);
-        tracep->declBus(c+36,"top exe_reg exe_reg_in2", false,-1, 4,0);
-        tracep->declQuad(c+92,"top exe_reg exe_reg_in3", false,-1, 63,0);
-        tracep->declBus(c+17,"top exe_reg exe_reg_in4", false,-1, 1,0);
-        tracep->declQuad(c+94,"top exe_reg exe_reg_in5", false,-1, 63,0);
+        tracep->declQuad(c+84,"top exe_reg id_reg_pc", false,-1, 63,0);
+        tracep->declBus(c+41,"top exe_reg exe_op_in", false,-1, 11,0);
+        tracep->declBus(c+36,"top exe_reg exe_reg_rd_in", false,-1, 4,0);
+        tracep->declQuad(c+92,"top exe_reg exe_reg_src1_in", false,-1, 63,0);
+        tracep->declBus(c+17,"top exe_reg exe_reg_src1_sel_in", false,-1, 1,0);
+        tracep->declQuad(c+94,"top exe_reg exe_reg_src2_in", false,-1, 63,0);
         tracep->declBit(c+2,"top exe_reg exe_reg_in7", false,-1);
         tracep->declBit(c+3,"top exe_reg exe_reg_in8", false,-1);
         tracep->declBus(c+23,"top exe_reg exe_reg_in9", false,-1, 1,0);
-        tracep->declBus(c+21,"top exe_reg exe_reg_in10", false,-1, 1,0);
-        tracep->declQuad(c+50,"top exe_reg exe_reg_in11", false,-1, 63,0);
-        tracep->declBus(c+32,"top exe_reg exe_reg_in12", false,-1, 4,0);
-        tracep->declBus(c+33,"top exe_reg exe_reg_in13", false,-1, 4,0);
-        tracep->declBit(c+5,"top exe_reg exe_reg_in14", false,-1);
+        tracep->declBus(c+21,"top exe_reg exe_op_in0", false,-1, 1,0);
+        tracep->declQuad(c+50,"top exe_reg exe_op_in1", false,-1, 63,0);
+        tracep->declBus(c+32,"top exe_reg exe_op_in2", false,-1, 4,0);
+        tracep->declBus(c+33,"top exe_reg exe_op_in3", false,-1, 4,0);
+        tracep->declBit(c+5,"top exe_reg exe_op_in4", false,-1);
         tracep->declQuad(c+82,"top exe_reg exe_reg_out0", false,-1, 63,0);
         tracep->declBus(c+43,"top exe_reg exe_reg_out1", false,-1, 11,0);
         tracep->declBus(c+38,"top exe_reg exe_reg_out2", false,-1, 4,0);
@@ -466,11 +466,11 @@ void VYSYX_22040125_B_CHECK___024root__traceFullSub0(VYSYX_22040125_B_CHECK___02
     {
         tracep->fullBit(oldp+1,(((0x23U == (0x7fU & vlSelf->top__DOT__inst_id))
                                   ? 1U : 0U)));
-        tracep->fullBit(oldp+2,(((IData)(vlSelf->top__DOT__stall_control)
+        tracep->fullBit(oldp+2,(((IData)(vlSelf->top__DOT__stall_id)
                                   ? 0U : ((0x23U == 
                                            (0x7fU & vlSelf->top__DOT__inst_id))
                                            ? 1U : 0U))));
-        tracep->fullBit(oldp+3,(((IData)(vlSelf->top__DOT__stall_control)
+        tracep->fullBit(oldp+3,(((IData)(vlSelf->top__DOT__stall_id)
                                   ? 0U : (((((0x33U 
                                               == (0x7fU 
                                                   & vlSelf->top__DOT__inst_id)) 
@@ -480,7 +480,7 @@ void VYSYX_22040125_B_CHECK___024root__traceFullSub0(VYSYX_22040125_B_CHECK___02
                                               == (0x7fU 
                                                   & vlSelf->top__DOT__inst_id)))
                                            ? 1U : 0U))));
-        tracep->fullBit(oldp+4,(vlSelf->top__DOT__stall_control));
+        tracep->fullBit(oldp+4,(vlSelf->top__DOT__stall_id));
         tracep->fullBit(oldp+5,((((((((IData)(vlSelf->top__DOT__idu__DOT__inst_lb) 
                                       | (IData)(vlSelf->top__DOT__idu__DOT__inst_lh)) 
                                      | (IData)(vlSelf->top__DOT__idu__DOT__inst_lw)) 

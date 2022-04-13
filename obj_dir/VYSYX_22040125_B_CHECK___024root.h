@@ -26,7 +26,7 @@ VL_MODULE(VYSYX_22040125_B_CHECK___024root) {
     // LOCAL SIGNALS
     // Anonymous structures to workaround compiler member-count bugs
     struct {
-        CData/*0:0*/ top__DOT__stall_control;
+        CData/*0:0*/ top__DOT__stall_id;
         CData/*0:0*/ top__DOT__exe_reg_data_ren;
         CData/*0:0*/ top__DOT__mem_reg_data_ren;
         CData/*0:0*/ top__DOT__ebreak_out;

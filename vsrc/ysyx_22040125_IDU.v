@@ -1,11 +1,29 @@
 `include "/home/sakamoto/ysyx-workbench/npc/vsrc/ysyx_22040125_config.v"
 module ysyx_22040125_IDU (
         input  wire[31:0]   inst,
+        input  wire[4:0]    exe_reg_rd,
+        input  wire[4:0]    exe_reg_rs1,
+        input  wire[4:0]    exe_reg_rs2,
+        input  wire[4:0]    wb_reg_rd,
+        input  wire[4:0]    mem_reg_rd,
+        input  wire[1:0]    exe_reg_src1_sel,
+        input  wire[1:0]    exe_reg_src2_sel,
+        input  wire         exe_reg_data_ren,
+        input  wire         mem_reg_data_ren,
+        input  wire         wb_reg_reg_wen,
+        input  wire         exe_reg_reg_wen,
+        input  wire         mem_reg_reg_wen,
         output wire[63:0]   imm,
-        output wire[14:0]   op,
+        output wire[15:0]   op,
         output wire[5:0]    b_check,
         output wire[5:0]    l_bhw,
         output wire[4:0]    rd,
+        output wire[2:0]    src1_sel_plus,
+        output wire[2:0]    src2_sel_plus,
+        output wire[3:0]    pc_add_rs1_sel,
+        output wire[3:0]    b_check_rs2_sel,
+        output wire         stall_id,
+        output wire         stall_l,
         output wire[4:0]    rs1,
         output wire[4:0]    rs2,
         output wire[2:0]    s_bhwd,
@@ -147,7 +165,8 @@ module ysyx_22040125_IDU (
                 inst_jalr?           `OP_JAL  :
                 op_mul?              `OP_MUL  :
                 op_div?              `OP_DIV  :
-                op_rem?              `OP_REM  :0;
+                op_rem?              `OP_REM  :
+                inst_ebreak?         `OP_EBREAK :0;
 
     assign src1_sel = (TYPE_J || inst_jalr || inst_auipc)? 2'b01: 2'b10;
     assign src2_sel = (TYPE_J || TYPE_U || TYPE_I)? 2'b01: 2'b10;
@@ -161,5 +180,21 @@ module ysyx_22040125_IDU (
     assign s_bhwd = {inst_sb, inst_sh, inst_sw};
     assign l_bhw = {inst_lb, inst_lbu, inst_lh, inst_lhu, inst_lw, inst_lwu};
     assign w_check = inst_addiw | inst_remw | inst_slliw | inst_srliw | inst_sraiw | inst_addw | inst_subw | inst_sllw | inst_srlw | inst_sraw | inst_mulw | inst_divw;
+
+    assign stall_l = (((exe_reg_data_ren) && ((exe_reg_rd == rs1) || (exe_reg_rd == rs2))) || 
+                      ((mem_reg_data_ren) && ((mem_reg_rd == rs1) || (mem_reg_rd == rs2))))? 1: 0;
+
+    assign stall_id = (op == 0);     
+
+    assign src1_sel_plus = ((mem_reg_reg_wen) && (mem_reg_rd != 0) && (exe_reg_rs1 == mem_reg_rd) && (exe_reg_src1_sel == 2'b10))? 3'b010:
+                       ((wb_reg_reg_wen) && (wb_reg_rd != 0) && (exe_reg_rs1 == wb_reg_rd) && (exe_reg_src1_sel == 2'b10))? 3'b100: 3'b001;
+    assign src2_sel_plus = ((mem_reg_reg_wen) && (mem_reg_rd != 0) && (exe_reg_rs2 == mem_reg_rd) && (exe_reg_src2_sel == 2'b10))? 3'b010:
+                        ((wb_reg_reg_wen) && (wb_reg_rd != 0) && (exe_reg_rs2 == wb_reg_rd) && (exe_reg_src2_sel == 2'b10))? 3'b100: 3'b001;
+    assign pc_add_rs1_sel = ((exe_reg_reg_wen) && (exe_reg_rd != 0) && (rs1 == exe_reg_rd))? 4'b0010:
+                            ((mem_reg_reg_wen) && (mem_reg_rd != 0) && (rs1 == mem_reg_rd))? 4'b0100:
+                            ((wb_reg_reg_wen) && (wb_reg_rd != 0) && (rs1 == wb_reg_rd))? 4'b1000: 4'b0001;
+    assign b_check_rs2_sel = ((exe_reg_reg_wen) && (exe_reg_rd != 0) && (rs2 == exe_reg_rd))? 4'b0010:
+                            ((mem_reg_reg_wen) && (mem_reg_rd != 0) && (rs2 == mem_reg_rd))? 4'b0100:
+                            ((wb_reg_reg_wen) && (wb_reg_rd != 0) && (rs2 == wb_reg_rd))? 4'b1000: 4'b0001;
 
 endmodule //ysyx_22040125_IDU

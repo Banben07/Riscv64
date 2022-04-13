@@ -8,21 +8,21 @@ module ysyx_22040125_RAM (
         input  wire        data_wen,
         input  wire        data_ren,
         input  wire        clk,
-        output reg[63:0]   outdata,
         output reg[31:0]   inst,
         output reg[63:0]   rdata,
-        output reg[63:0]   if_pc
+        output reg[63:0]   if_pc,
+        output reg         stall_if,
+        output reg         stall_mem
     );
 
     import "DPI-C" function void set_ram_ptr(input logic [63:0] a []);
     initial set_ram_ptr(ram); 
 
-    wire op_sb, op_sh, op_sw, op_lb, op_lbu, op_lh, op_lhu, op_lw, op_lwu;
+    wire op_sb, data_cout, op_sh, op_sw, op_lb, op_lbu, op_lh, op_lhu, op_lw, op_lwu;
     wire[31:0]  addr, addr1, addr2;
-    wire[63:0]  rdata_out;
+    wire[63:0]  rdata_out, data_result;
     reg [31:0]  ram [400000:0];
-    wire[63:0] rom;
-
+    wire[63:0]  rom;
     
     initial begin
         $readmemh("/home/sakamoto/ysyx-workbench/npc/mem/program.hex", ram);
@@ -33,6 +33,9 @@ module ysyx_22040125_RAM (
     assign addr2 = {(cpu_pc-64'h80000000) >> 2}[31:0];
     assign addr = addr1 << 1;
     assign rom = {ram[addr+1], ram[addr]};
+    /* verilator lint_off WIDTH */
+    assign {data_cout, data_result} = cpu_pc + 64'hffffffff60000000;
+    /* verilator lint_off WIDTH */
 
     assign op_sb = s_bhwd[2];
     assign op_sh = s_bhwd[1];
@@ -79,9 +82,18 @@ module ysyx_22040125_RAM (
             inst = ram[0];
             if_pc = 0;
             rdata = 0;
+            stall_if = 0;
+            stall_mem = 0;
         end else begin
             inst = ram[addr2];
             if_pc = cpu_pc;
+
+            if (data_cout) begin
+                stall_if = 1;
+            end else begin
+                stall_if = 0;
+            end
+
             if (data_wen && op_sb && ram_addr[2:0] == 3'b000) begin
                 ram[addr][7:0] = wdata[7:0];
             end
@@ -126,7 +138,6 @@ module ysyx_22040125_RAM (
             end
             if (data_wen && s_bhwd == 3'd0) begin
                 {ram[addr+1], ram[addr]} = wdata;
-                outdata = rom;
             end
             if (data_ren) begin
                 rdata = rdata_out;

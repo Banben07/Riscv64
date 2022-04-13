@@ -104,13 +104,13 @@ VL_INLINE_OPT void VYSYX_22040125_B_CHECK___024root___sequent__TOP__1(VYSYX_2204
     if (vlSelf->rst) {
         vlSelf->top__DOT__wb_reg_rdata = vlSelf->top__DOT__rdata;
         vlSelf->top__DOT__wb_reg_pc_sel = vlSelf->top__DOT__mem_reg_pc_sel;
-        vlSelf->top__DOT__cpu_pc = ((IData)(vlSelf->top__DOT__stall_control)
+        vlSelf->top__DOT__cpu_pc = ((IData)(vlSelf->top__DOT__stall_id)
                                      ? vlSelf->top__DOT__cpu_pc
                                      : vlSelf->top__DOT__cpu_dnpc);
         __Vdly__top__DOT__id_reg_pc = (((1U == (IData)(vlSelf->top__DOT__pc_sel_out))
                                          ? 0U : 1U)
                                         ? vlSelf->top__DOT__if_pc
-                                        : ((IData)(vlSelf->top__DOT__stall_control)
+                                        : ((IData)(vlSelf->top__DOT__stall_id)
                                             ? vlSelf->top__DOT__id_reg_pc
                                             : vlSelf->top__DOT__if_pc));
         vlSelf->top__DOT__wb_reg_load_sel = vlSelf->top__DOT__mem_reg_load_sel;
@@ -130,7 +130,7 @@ VL_INLINE_OPT void VYSYX_22040125_B_CHECK___024root___sequent__TOP__1(VYSYX_2204
         vlSelf->top__DOT__exe_reg_rs1 = vlSelf->top__DOT__rs1;
         __Vdly__top__DOT__inst_id = (((1U == (IData)(vlSelf->top__DOT__pc_sel_out))
                                        ? 0U : 1U) ? 0xffffffffU
-                                      : ((IData)(vlSelf->top__DOT__stall_control)
+                                      : ((IData)(vlSelf->top__DOT__stall_id)
                                           ? vlSelf->top__DOT__inst_id
                                           : vlSelf->top__DOT__inst));
         vlSelf->top__DOT__exe_reg_imm = vlSelf->top__DOT__imm;
@@ -219,7 +219,7 @@ VL_INLINE_OPT void VYSYX_22040125_B_CHECK___024root___sequent__TOP__1(VYSYX_2204
                                               | (IData)(vlSelf->top__DOT__idu__DOT__inst_lhu))
                                               ? 1U : 0U));
     vlSelf->top__DOT__exe_reg_data_wen = ((IData)(vlSelf->rst) 
-                                          & ((IData)(vlSelf->top__DOT__stall_control)
+                                          & ((IData)(vlSelf->top__DOT__stall_id)
                                               ? 0U : 
                                              ((0x23U 
                                                == (0x7fU 
@@ -262,7 +262,7 @@ VL_INLINE_OPT void VYSYX_22040125_B_CHECK___024root___sequent__TOP__1(VYSYX_2204
     if (vlSelf->rst) {
         vlSelf->top__DOT__exe_reg_rd = (0x1fU & (vlSelf->top__DOT__inst_id 
                                                  >> 7U));
-        vlSelf->top__DOT__exe_reg_reg_wen = (((IData)(vlSelf->top__DOT__stall_control)
+        vlSelf->top__DOT__exe_reg_reg_wen = (((IData)(vlSelf->top__DOT__stall_id)
                                                ? 0U
                                                : ((
                                                    (((0x33U 
@@ -622,7 +622,7 @@ VL_INLINE_OPT void VYSYX_22040125_B_CHECK___024root___sequent__TOP__1(VYSYX_2204
                                                                ((IData)(vlSelf->top__DOT__idu__DOT__inst_jalr)
                                                                  ? 0x800U
                                                                  : 0U))))))))))))))))));
-    vlSelf->top__DOT__stall_control = (((IData)(vlSelf->top__DOT__exe_reg_data_ren) 
+    vlSelf->top__DOT__stall_id = (((IData)(vlSelf->top__DOT__exe_reg_data_ren) 
                                         & (((IData)(vlSelf->top__DOT__exe_reg_rd) 
                                             == (IData)(vlSelf->top__DOT__rs1)) 
                                            | ((IData)(vlSelf->top__DOT__exe_reg_rd) 
