@@ -14,3 +14,10 @@
 `define 	OP_DIV  			16'b0010000000000000
 `define 	OP_REM  			16'b0100000000000000
 `define 	OP_EBREAK  			16'b1000000000000000
+
+`define     NULL                3'b000
+`define     DATA_SEND_RADDR     3'b001 
+`define     DATA_RECEIVE_RDATA  3'b010
+`define     DATA_SEND_WADDR     3'b011 
+`define     DATA_SEND_WDATA     3'b100
+`define     DATA_RECEIVE_B      3'b101
