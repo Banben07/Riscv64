@@ -21,14 +21,17 @@ module ysyx_22040125_MEM (
     
 );
 
+    wire[31:0]  addr1, addr;
     assign data_r_en = data_ren;
     assign data_w_en = data_wen;
     assign arsize = {l_bhw[5]|l_bhw[4], l_bhw[3]|l_bhw[2], l_bhw[1]|l_bhw[0]};
     assign awsize = s_bhwd;
-    assign data_r_addr = ram_addr;
-    assign data_w_addr = ram_addr;
+    assign addr1 = (ram_addr-32'h80000000) >> 3;
+    assign addr = addr1 << 1;
+    assign data_r_addr = addr;
+    assign data_w_addr = addr;
     assign data_w = wdata;
-    assign stall_mem = (~data_r_valid | ~data_w_valid);
+    assign stall_mem = (~data_r_valid & data_ren) | (~data_w_valid & data_wen);
 
     wire op_sb, data_cout, op_sh, op_sw, op_lb, op_lbu, op_lh, op_lhu, op_lw, op_lwu;
 

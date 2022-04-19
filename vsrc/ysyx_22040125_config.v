@@ -21,3 +21,5 @@
 `define     DATA_SEND_WADDR     3'b011 
 `define     DATA_SEND_WDATA     3'b100
 `define     DATA_RECEIVE_B      3'b101
+`define     INST_SEND_RADDR     3'b110 
+`define     INST_RECEIVE_RDATA  3'b111

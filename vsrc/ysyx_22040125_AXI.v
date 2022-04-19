@@ -4,7 +4,7 @@ module ysyx_22040125_AXI (
     input   wire             aresetn,
 
     //ar
-    output  wire             arid,
+    output  wire[3:0]        arid,
     output  wire[31:0]       araddr,
     output  wire[7:0]        arlen,
     output  wire[2:0]        arsize,
@@ -38,7 +38,7 @@ module ysyx_22040125_AXI (
     //w
     output wire[3:0]         wid,
     output wire[63:0]        wdata,
-    output wire[3:0]         wstrb,
+    output wire[7:0]         wstrb,
     output wire              wlast,
     output wire              wvalid,
     input  wire              wready,
@@ -61,7 +61,7 @@ module ysyx_22040125_AXI (
     input  wire[31:0]        data_r_addr,
     input  wire[63:0]        data_w,
     input  wire[31:0]        data_w_addr,
-    input  wire[3:0]         data_w_mask,
+    input  wire[7:0]         data_w_mask,
     output reg[63:0]         data_r,
     input  wire[2:0]         cpu_arsize,
     input  wire[2:0]         cpu_awsize
@@ -70,14 +70,19 @@ module ysyx_22040125_AXI (
     wire      ar_check, r_check, aw_check, w_check, b_check, r_finish, w_finish;
     reg [2:0] axi_read_state;
     reg [2:0] axi_write_state;
+    reg [2:0] axi_r_back_state;
+    reg [2:0] axi_w_back_state;
+    reg [63:0]  test_data;
+    wire[63:0]  test_data_wire;
+    assign test_data_wire = rdata;
 
     assign ar_check = arready & arvalid;
     assign r_check  = rready  & rvalid;
     assign aw_check = awready & awvalid;
     assign w_check  = wready  & wvalid;
     assign b_check  = bready  & bvalid;
-    assign r_finish = r_check & rlast;
-    assign w_finish = w_check & wlast;
+    assign r_finish = r_check;
+    assign w_finish = w_check;
     
     //pre_definition
     assign arlen = 8'b0;
@@ -93,18 +98,18 @@ module ysyx_22040125_AXI (
     assign wid = 4'b1;
     assign wlast = 1'b1;
 
-    assign arid = data_r_en;
-    assign araddr = ({32{inst_r_en}}  &  inst_addr)
-                |   ({32{data_r_en}}  &  data_r_addr);
-    assign arvalid = (axi_read_state == `DATA_SEND_RADDR);
+    assign arid = {3'b0, data_r_en};
+    assign araddr = ((axi_read_state == `DATA_SEND_RADDR) || (axi_read_state == `INST_SEND_RADDR))? (({32{inst_r_en}}  &  inst_addr)
+                |   ({32{data_r_en}}  &  data_r_addr)) : 0;
+    assign arvalid = (axi_read_state == `DATA_SEND_RADDR) | (axi_read_state == `INST_SEND_RADDR);
     assign arsize = cpu_arsize;
-    assign rready = (axi_read_state == `DATA_RECEIVE_RDATA);
+    assign rready = (axi_r_back_state == `DATA_RECEIVE_RDATA) | (axi_r_back_state == `INST_RECEIVE_RDATA);
 
     assign awaddr = {32{data_w_en}}  &  data_w_addr;
     assign awsize = cpu_awsize;
     assign awvalid = (axi_write_state == `DATA_SEND_WADDR);
     assign wdata = (axi_write_state == `DATA_SEND_WADDR)? data_w: 64'b0;
-    assign wstrb = (axi_write_state == `DATA_SEND_WADDR)? data_w_mask: 4'b0;
+    assign wstrb = (axi_write_state == `DATA_SEND_WADDR)? data_w_mask: 8'b0;
     assign wvalid = (axi_write_state == `DATA_SEND_WDATA);
 
     assign bready = (axi_write_state == `DATA_RECEIVE_B);
@@ -123,37 +128,55 @@ module ysyx_22040125_AXI (
         end else begin
             case (axi_read_state)
                 `NULL: begin
-                    inst_r_valid <= 1'b0;
-                    data_r_valid <= 1'b0;
-                    if (data_r_en || inst_r_en) begin
+                    if (data_r_en) begin
                         axi_read_state <= `DATA_SEND_RADDR;
+                    end
+                    if (inst_r_en) begin
+                        axi_read_state <= `INST_SEND_RADDR;
                     end
                 end
                 `DATA_SEND_RADDR: begin
                     if(ar_check) begin
-                        axi_read_state <= `DATA_RECEIVE_RDATA;
+                        axi_read_state <= `NULL;
+                        axi_r_back_state <= `DATA_RECEIVE_RDATA;
                     end
                 end
-                `DATA_RECEIVE_RDATA: begin
-                    if(r_finish) begin
-                        if (data_r_en) begin
-                            data_r <= rdata;
-                            data_r_valid <= 1'b1;
-                        end
-                        if (inst_r_en) begin
-                            inst_r <= rdata[31:0];
-                            inst_r_valid <= 1'b1;
-                        end
+                `INST_SEND_RADDR: begin
+                    if(ar_check) begin
                         axi_read_state <= `NULL;
+                        axi_r_back_state <= `INST_RECEIVE_RDATA;
                     end
                 end
                 default: begin
                     axi_read_state <= `NULL;
                     data_r <= 64'b0;
                     inst_r <= 32'd0;
-                    data_r_valid <= 1'b0;
-                    inst_r_valid <= 1'b0;
                 end
+            endcase
+            case (axi_r_back_state)
+                `NULL: begin
+                    inst_r_valid <= 1'b0;
+                    data_r_valid <= 1'b0;
+                end
+                `DATA_RECEIVE_RDATA: begin
+                    if(r_finish) begin
+                        data_r <= rdata;
+                        data_r_valid <= 1'b1;
+                        axi_r_back_state <= `NULL;
+                    end
+                end
+                `INST_RECEIVE_RDATA: begin
+                    if(r_finish) begin
+                        inst_r <= rdata[31:0];
+                        inst_r_valid <= 1'b1;
+                        axi_r_back_state <= `NULL;
+                    end
+                end
+                default: begin
+                    axi_r_back_state <= `NULL;
+                    data_r <= 64'b0;
+                    inst_r <= 32'd0;
+                end                
             endcase
             case (axi_write_state)
               `NULL: begin
